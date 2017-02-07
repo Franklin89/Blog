@@ -26,9 +26,7 @@ namespace MLSoftware.Web.Controllers
         public IActionResult Details(string id)
         {
             var post = GetPost(id);
-
-            //ViewData["Title"] = post.Title;
-
+            ViewData["Title"] = post.Title;
             return View(post);
         }
 
