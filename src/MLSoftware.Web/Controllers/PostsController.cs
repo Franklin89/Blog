@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace MLSoftware.Web.Controllers
 {
-    public class PostsController : Controller
+    public class PostController : Controller
     {
         private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
 
-        public PostsController(IHostingEnvironment env, ILogger<PostsController> logger)
+        public PostController(IHostingEnvironment env, ILogger<PostController> logger)
         {
             _env = env;
             _logger = logger;
