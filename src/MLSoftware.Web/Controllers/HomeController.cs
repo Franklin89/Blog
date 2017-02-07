@@ -55,7 +55,7 @@ namespace MLSoftware.Web.Controllers
                 }
             }
 
-            return list.OrderByDescending(x => x.Published);
+            return list.OrderByDescending(x => x.Published).Take(5);
         }
 
         public IActionResult Error()
