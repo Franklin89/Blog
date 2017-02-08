@@ -5,9 +5,11 @@ using Markdig.Syntax;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
 using MLSoftware.Web.Model;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -15,17 +17,31 @@ namespace MLSoftware.Web.Controllers
     {
         private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
+        private readonly IMemoryCache _cache;
 
-        public PostController(IHostingEnvironment env, ILogger<PostController> logger)
+        public PostController(IHostingEnvironment env, IMemoryCache cache, ILogger<PostController> logger)
         {
             _env = env;
             _logger = logger;
+            _cache = cache;
         }
 
         [HttpGet]
         public IActionResult Details(string id)
         {
-            var post = GetPost(id);
+            var post = _cache.Get<Post>(id);
+
+            if(post == null)
+            {
+                _logger.LogDebug("Parsing markdown file and saving it to cache...");
+                post = GetPost(id);
+
+                _cache.Set(id, post, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTimeOffset.MaxValue
+                });
+            }
+
             ViewData["Title"] = post.Title;
             return View(post);
         }

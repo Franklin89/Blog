@@ -11,7 +11,7 @@
         @foreach (var item in Model)
         {
             <div class="post-preview">
-                <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@item.Filename">
+                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Filename">
                     <h2 class="post-title">
                         @item.Title
                     </h2>
