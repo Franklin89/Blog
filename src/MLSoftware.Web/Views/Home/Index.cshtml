@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MLSoftware.Web.Model.PostFrontMatter>
+﻿@model MLSoftware.Web.ViewModels.HomeViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -8,7 +8,7 @@
 
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.Posts)
         {
             <div class="post-preview">
                 <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Filename">

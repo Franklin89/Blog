@@ -11,6 +11,7 @@ using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using System.IO;
 using System.Linq;
+using MLSoftware.Web.ViewModels;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -27,8 +28,10 @@ namespace MLSoftware.Web.Controllers
 
         public IActionResult Index()
         {
-            var posts = GetPostMetaData();
-            return View(posts);
+            var viewModel = new HomeViewModel{
+                Posts = GetPostMetaData()
+            };
+            return View(viewModel);
         }
 
         private IEnumerable<PostFrontMatter> GetPostMetaData()
