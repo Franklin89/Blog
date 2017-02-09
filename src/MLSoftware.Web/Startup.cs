@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace MLSoftware.Web
 {
@@ -43,7 +40,6 @@ namespace MLSoftware.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -51,6 +47,11 @@ namespace MLSoftware.Web
             }
 
             app.UseStaticFiles();
+
+            app.Use((context, next) => context.Request.Path.StartsWithSegments("/ping")
+                ? context.Response.WriteAsync("pong")
+                : next()
+            );
 
             app.UseMvc(routes =>
             {
