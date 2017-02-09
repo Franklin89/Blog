@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{73EA3D6F-8272-49B9-8E8C-2277CCDB8DA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E5FE3DA-A288-435E-A951-88E2FE4FE9F9}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MLSoftware.Web", "src\MLSoftware.Web\MLSoftware.Web.xproj", "{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLSoftware.Web", "src\MLSoftware.Web\MLSoftware.Web.csproj", "{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
