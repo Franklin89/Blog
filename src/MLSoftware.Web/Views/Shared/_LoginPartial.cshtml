@@ -3,14 +3,15 @@
 @if (User.Identity.IsAuthenticated)
 {
 
-    <ul class="list-inline text-center">
-        <li>@User.Identity.Name</li>
-        <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
-        <li><a asp-controller="Account" asp-action="SignOut">Sign Out</a></li>
+    <ul class="list-inline text-center text-muted">
+        <li><a class="text-muted small" asp-controller="Admin" asp-action="Index">Admin</a></li>
+        <li><a class="text-muted small" asp-controller="Account" asp-action="SignOut">Sign Out</a></li>
     </ul>
 }
 
 @if (!User.Identity.IsAuthenticated)
 {
-    <a asp-controller="Account" asp-action="SignIn">Sign In</a>
+    <ul class="list-inline text-center">
+        <li><a class="text-muted small" asp-controller="Account" asp-action="SignIn">Sign In</a></li>
+    </ul>
 }
