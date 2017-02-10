@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MLSoftware.Web.Model;
 using System.Collections.Generic;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Markdig;
 using Markdig.Extensions.Yaml;
-using Markdig.Renderers;
 using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 using System.IO;
 using System.Linq;
+using MLSoftware.Web.ViewModels;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -25,10 +23,13 @@ namespace MLSoftware.Web.Controllers
             _logger = logger;
         }
 
+        [Route("/")]
         public IActionResult Index()
         {
-            var posts = GetPostMetaData();
-            return View(posts);
+            var viewModel = new HomeViewModel{
+                Posts = GetPostMetaData()
+            };
+            return View(viewModel);
         }
 
         private IEnumerable<PostFrontMatter> GetPostMetaData()
@@ -58,6 +59,7 @@ namespace MLSoftware.Web.Controllers
             return list.OrderByDescending(x => x.Published).Take(5);
         }
 
+        [Route("/error")]
         public IActionResult Error()
         {
             return View();

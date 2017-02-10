@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace MLSoftware.Web
 {
@@ -27,6 +27,19 @@ namespace MLSoftware.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+            services.AddAuthorization(options =>
+                options.AddPolicy("Admin", policyBuilder =>
+                    policyBuilder.RequireClaim(
+                        ClaimTypes.Email,
+                        Configuration["Authorization:AdminUsers"].Split(',')
+                    )
+                )
+            );
+
+            // Add caching
+            services.AddMemoryCache();
+
             // Add framework services.
             services.AddMvc();
         }
@@ -40,7 +53,6 @@ namespace MLSoftware.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -49,12 +61,24 @@ namespace MLSoftware.Web
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseCookieAuthentication(new CookieAuthenticationOptions            {                AutomaticAuthenticate = true            });
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                ClientId = Configuration["Authentication:AzureAd:ClientId"],
+                Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"],
+                ResponseType = OpenIdConnectResponseType.IdToken,
+                SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme
             });
+
+            app.Use((context, next) => context.Request.Path.StartsWithSegments("/ping")
+                ? context.Response.WriteAsync("pong")
+                : next()
+            );
+
+            app.UseMvc();
         }
     }
 }
