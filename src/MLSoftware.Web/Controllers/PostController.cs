@@ -13,6 +13,7 @@ using System;
 
 namespace MLSoftware.Web.Controllers
 {
+    [Route("[controller]")]
     public class PostController : Controller
     {
         private readonly IHostingEnvironment _env;
@@ -27,6 +28,7 @@ namespace MLSoftware.Web.Controllers
         }
 
         [HttpGet]
+        [Route("[action]/{id}")]
         public IActionResult Details(string id)
         {
             var post = _cache.Get<Post>(id);

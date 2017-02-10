@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment HostingEnvironment
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -107,6 +109,11 @@
                         </ul>
                         <p class="copyright text-muted">Copyright &copy; ML-Software 2017</p>
                         <p class="text-muted disclaimer text-center">Discalimer: I work as a software developer but this blog, its content and opinions are my own.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
             </div>

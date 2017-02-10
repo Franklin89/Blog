@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MLSoftware.Web.Controllers
 {
-    [Route("/admin")]
     [Authorize("Admin")]
+    [Route("[controller]")]
     public class AdminController : Controller
     {
         public IActionResult Index()
