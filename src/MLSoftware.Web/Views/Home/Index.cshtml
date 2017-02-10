@@ -8,27 +8,27 @@
 
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-        @foreach (var item in Model.Posts)
-        {
-            <div class="post-preview">
-                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Filename">
-                    <h2 class="post-title">
-                        @item.Title
-                    </h2>
-                    <h3 class="post-subtitle">
-                        @item.Description
-                    </h3>
-                </a>
-                <p class="post-meta">Posted by @item.Author on @item.Published.ToString("MMMM dd, yyyy hh:mm")</p>
-            </div>
-            <hr>
-        }
+            @foreach (var item in Model.Posts)
+            {
+                <div class="post-preview">
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Filename">
+                        <h2 class="post-title">
+                            @item.Title
+                        </h2>
+                        <h3 class="post-subtitle">
+                            @item.Description
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by @item.Author on @item.Published.ToString("MMMM dd, yyyy hh:mm")</p>
+                </div>
+                <hr>
+            }
 
-        <!-- Pager -->
-        @*<ul class="pager">
-            <li class="next">
-                <a href="#">Older Posts &rarr;</a>
-            </li>
-        </ul>*@
-    </div>
+            <!-- Pager -->
+            @*<ul class="pager">
+                <li class="next">
+                    <a href="#">Older Posts &rarr;</a>
+                </li>
+            </ul>*@
+</div>
 </div>

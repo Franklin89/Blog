@@ -61,7 +61,10 @@ namespace MLSoftware.Web
 
             app.UseStaticFiles();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions            {                AutomaticAuthenticate = true            });
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AutomaticAuthenticate = true
+            });
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
