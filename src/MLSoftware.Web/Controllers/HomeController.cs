@@ -1,13 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MLSoftware.Web.Model;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using Markdig;
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
-using System.IO;
-using System.Linq;
 using MLSoftware.Web.ViewModels;
 
 namespace MLSoftware.Web.Controllers
@@ -16,47 +9,23 @@ namespace MLSoftware.Web.Controllers
     {
         private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
+        private readonly IPostRepository _postRepository;
 
-        public HomeController(IHostingEnvironment env, ILogger<HomeController> logger)
+        public HomeController(IHostingEnvironment env, ILogger<HomeController> logger, IPostRepository postRepository)
         {
             _env = env;
             _logger = logger;
+            _postRepository = postRepository;
         }
 
         [Route("/")]
         public IActionResult Index()
         {
-            var viewModel = new HomeViewModel{
-                Posts = GetPostMetaData()
+            var postMetadata = _postRepository.GetPostMetadata(5);
+            var viewModel = new HomeViewModel {
+                Posts = postMetadata
             };
             return View(viewModel);
-        }
-
-        private IEnumerable<PostFrontMatter> GetPostMetaData()
-        {
-            var list = new List<PostFrontMatter>();
-
-            var basePath = Path.Combine(_env.WebRootPath, "posts");
-            _logger.LogDebug("Reading posts at: {0}", basePath);
-
-            var files = Directory.GetFiles(basePath, "*.md");
-            _logger.LogDebug("Found {0} files", files.Length);
-
-            foreach(var file in files)
-            {
-                _logger.LogDebug("Parsing file: {0}", file);
-                var fileInfo = new FileInfo(file);
-                using (var reader = fileInfo.OpenText())
-                {
-                    var pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
-                    var doc = Markdown.Parse(reader.ReadToEnd(), pipeline);
-
-                    var yaml = doc.Descendants().OfType<YamlFrontMatterBlock>().FirstOrDefault();
-                    list.Add(new PostFrontMatter(fileInfo.Name, yaml?.Lines.Lines.Select(l => l.ToString())));
-                }
-            }
-
-            return list.OrderByDescending(x => x.Published).Take(5);
         }
 
         [Route("/error")]

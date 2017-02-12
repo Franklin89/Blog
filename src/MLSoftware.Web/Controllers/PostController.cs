@@ -1,84 +1,172 @@
-﻿using Markdig;
-using Markdig.Extensions.Yaml;
-using Markdig.Renderers;
-using Markdig.Syntax;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Caching.Memory;
 using MLSoftware.Web.Model;
-using System.IO;
-using System.Linq;
-using System;
+using MLSoftware.Web.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace MLSoftware.Web.Controllers
 {
+    [Authorize("Admin")]
     [Route("[controller]")]
     public class PostController : Controller
     {
         private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
-        private readonly IMemoryCache _cache;
+        private readonly IPostRepository _postRepository;
 
-        public PostController(IHostingEnvironment env, IMemoryCache cache, ILogger<PostController> logger)
+        public PostController(IHostingEnvironment env, ILogger<PostController> logger, IPostRepository postRepository)
         {
             _env = env;
             _logger = logger;
-            _cache = cache;
+            _postRepository = postRepository;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            var postMetadata = _postRepository.GetPostMetadata();
+            var viewModel = new HomeViewModel
+            {
+                Posts = postMetadata
+            };
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("[action]/{id}")]
+        public IActionResult Details(int id)
+        {
+            var post = _postRepository.Get(id);
+
+            if (post == null || (post.Published == null && !User.Identity.IsAuthenticated))
+            {
+                return NotFound();
+            }
+
+            ViewData["Title"] = post.Title;
+
+            post.Content = new PostContent
+            {
+                Id = post.Content.Id,
+                Content = post.Content.Parse()
+            };
+
+            return View(post);
         }
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public IActionResult Details(string id)
+        public IActionResult Publish(int id)
         {
-            var post = _cache.Get<Post>(id);
-
-            if(post == null)
-            {
-                _logger.LogDebug("Parsing markdown file and saving it to cache...");
-                post = GetPost(id);
-
-                _cache.Set(id, post, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTimeOffset.MaxValue
-                });
-            }
-
-            ViewData["Title"] = post.Title;
-            return View(post);
+            _postRepository.Publish(id);
+            return RedirectToAction("Index", "Home");
         }
 
-        private Post GetPost(string filename)
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public IActionResult Unpublish(int id)
         {
-            var filePath = Path.Combine(_env.WebRootPath, "posts", filename);
+            _postRepository.Unpublish(id);
+            return RedirectToAction("Index", "Home");
+        }
 
-            if (System.IO.File.Exists(filePath))
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var draft = _postRepository.Get(id);
+            var viewModel = new PostViewModel
             {
-                var fileInfo = new FileInfo(filePath);
+                Id = draft.Id,
+                Title = draft.Title,
+                Description = draft.Description,
+                Content = draft.Content.Content
+            };
+            return View(viewModel);
+        }
 
-                using (var reader = fileInfo.OpenText())
+        [HttpPost]
+        [Route("[action]/{id}")]
+        public IActionResult Edit(int id, PostInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Model validation error, just return and let the error render
+                var viewModel = new PostViewModel();
+                return View(nameof(Edit), viewModel);
+            }
+
+            var post = _postRepository.Get(input.Id);
+
+            if (post != null)
+            {
+                post.Title = input.Title;
+                post.Description = input.Description;
+
+
+                post.Content.Content = input.Content;
+
+                _postRepository.Update(post);
+            }
+
+            return RedirectToAction(nameof(Details), new { id = post.Id });
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult Create()
+        {
+            return View(new PostViewModel());
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult Create(PostInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Model validation error, just return and let the error render
+                var viewModel = new PostViewModel();
+                return View(nameof(Edit), viewModel);
+            }
+
+            var post = new Post()
+            {
+                Content = new PostContent
                 {
-                    var pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
-                    var doc = Markdown.Parse(reader.ReadToEnd(), pipeline);
+                    Content = input.Content
+                },
 
-                    using (var writer = new StringWriter())
-                    {
-                        var renderer = new HtmlRenderer(writer);
-                        pipeline.Setup(renderer);
-                        renderer.Render(doc);
-                        writer.Flush();
+                Title = input.Title,
+                Description = input.Description,
+                Author = "Matteo"
+            };
 
-                        var yaml = doc.Descendants().OfType<YamlFrontMatterBlock>().FirstOrDefault();
-                        return new Post(fileInfo.Name, yaml?.Lines.Lines.Select(l => l.ToString())) { Content = writer.ToString() };
-                    }
-                }
-            }
+            _postRepository.Add(post);
 
-            else
+            return RedirectToAction(nameof(Details), new
             {
-                _logger.LogError("Unable to find file {0}", filePath);
-                throw new FileNotFoundException();
-            }
+                id = post.Id
+            });
+        }
+
+        [ModelMetadataType(typeof(PostViewModel))]
+        public class PostInputModel
+        {
+            [Required]
+            public int Id { get; set; }
+
+            [Required]
+            public string Title { get; set; }
+
+            public string Description { get; set; }
+
+            public string Content { get; set; }
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.EntityFrameworkCore;
 
 namespace MLSoftware.Web
 {
@@ -27,6 +28,12 @@ namespace MLSoftware.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<BlogContext>(options => 
+            {
+                options.UseSqlite(connection);
+            });
+
             services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
             services.AddAuthorization(options =>
                 options.AddPolicy("Admin", policyBuilder =>
@@ -40,8 +47,11 @@ namespace MLSoftware.Web
             // Add caching
             services.AddMemoryCache();
 
-            // Add framework services.
+            // Add framework services
             services.AddMvc();
+
+            // Register application services
+            services.AddScoped<IPostRepository, PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +70,7 @@ namespace MLSoftware.Web
             }
 
             app.UseStaticFiles();
+            app.UseStatusCodePages();
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

@@ -43,7 +43,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-controller="Post" asp-action="Draft">Drafts</a></li>
+                        <li><a asp-controller="Draft" asp-action="Index">Drafts</a></li>
                     }
                     <li><a asp-controller="Post" asp-action="Index">Posts</a></li>
                     <li><a asp-controller="Project" asp-action="Index">Projects</a></li>
