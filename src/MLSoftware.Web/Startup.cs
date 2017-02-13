@@ -62,6 +62,7 @@ namespace MLSoftware.Web
 
             // Register application services
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

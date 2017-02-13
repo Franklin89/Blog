@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using MLSoftware.Web.Model;
 
 namespace MLSoftware.Web.ViewModels
 {
@@ -20,5 +22,7 @@ namespace MLSoftware.Web.ViewModels
         public string SuccessMessage { get; set; }
 
         public bool ShowSuccessMessage => !string.IsNullOrEmpty(SuccessMessage);
+
+        public string Tags { get; set; }
     }
 }

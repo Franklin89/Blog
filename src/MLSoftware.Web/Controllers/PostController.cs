@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 using MLSoftware.Web.Model;
 using MLSoftware.Web.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -16,12 +18,14 @@ namespace MLSoftware.Web.Controllers
         private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
         private readonly IPostRepository _postRepository;
+        private readonly ITagRepository _tagRepository;
 
-        public PostController(IHostingEnvironment env, ILogger<PostController> logger, IPostRepository postRepository)
+        public PostController(IHostingEnvironment env, ILogger<PostController> logger, IPostRepository postRepository, ITagRepository tagRepository)
         {
             _env = env;
             _logger = logger;
             _postRepository = postRepository;
+            _tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -86,7 +90,8 @@ namespace MLSoftware.Web.Controllers
                 Title = draft.Title,
                 Description = draft.Description,
                 Content = draft.Content.Content,
-                IsDraft = draft.IsDraft
+                IsDraft = draft.IsDraft,
+                Tags = String.Join(", ", draft.PostTags.Select(x => x.Tag.Description))
             };
             return View(viewModel);
         }
@@ -110,6 +115,26 @@ namespace MLSoftware.Web.Controllers
                 post.Description = input.Description;
 
                 post.Content.Content = input.Content;
+
+                post.PostTags.Clear();
+
+                var tags = input.Tags.Split(',');
+                foreach (var tag in tags)
+                {
+                    var dbTag = _tagRepository.Get(tag.Trim());
+                    if(dbTag == null)
+                    {
+                        dbTag = new Tag
+                        {
+                            Description = tag.Trim()
+                        };
+                    }
+
+                    post.PostTags.Add(new PostTag
+                    {
+                        Tag = dbTag
+                    });                
+                }
 
                 _postRepository.Update(post);
             }
@@ -149,6 +174,26 @@ namespace MLSoftware.Web.Controllers
                 Author = "Matteo"
             };
 
+            post.PostTags = new List<PostTag>();
+
+            var tags = input.Tags.Split(',');
+            foreach (var tag in tags)
+            {
+                var dbTag = _tagRepository.Get(tag.Trim());
+                if (dbTag == null)
+                {
+                    dbTag = new Tag
+                    {
+                        Description = tag.Trim()
+                    };
+                }
+
+                post.PostTags.Add(new PostTag
+                {
+                    Tag = dbTag
+                });
+            }
+
             _postRepository.Add(post);
 
             return RedirectToAction(nameof(Details), new
@@ -169,6 +214,8 @@ namespace MLSoftware.Web.Controllers
             public string Description { get; set; }
 
             public string Content { get; set; }
+
+            public string Tags { get; set; }
         }
     }
 }

@@ -32,6 +32,13 @@
         </div>
     </div>
     <div class="form-group">
+        <label asp-for="Tags" class="col-md-3 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="Tags" class="form-control" />
+            <span asp-validation-for="Tags" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
         <label asp-for="Description" class="col-md-3 control-label"></label>
         <div class="col-md-5">
             <input asp-for="Description" class="form-control" />
