@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using MLSoftware.Web.ViewModels;
+using System.Linq;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -23,7 +24,7 @@ namespace MLSoftware.Web.Controllers
         {
             var postMetadata = _postRepository.GetPostMetadata(5);
             var viewModel = new HomeViewModel {
-                Posts = postMetadata
+                Posts = postMetadata.Select(x => new PostViewModel(x))
             };
             return View(viewModel);
         }

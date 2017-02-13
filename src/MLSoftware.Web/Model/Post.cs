@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MLSoftware.Web.Model
 {
@@ -15,12 +14,8 @@ namespace MLSoftware.Web.Model
 
         public List<PostTag> PostTags { get; set; }
 
-        public int PostContentId { get; set; }
         public PostContent Content { get; set; }
 
         public List<Comment> Comments { get; set; }
-
-        [NotMapped]
-        public bool IsDraft => Published == null;
     }
 }

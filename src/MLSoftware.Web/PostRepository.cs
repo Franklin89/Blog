@@ -81,7 +81,13 @@ namespace MLSoftware.Web
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var post = Get(id);
+            if(post == null)
+            {
+                throw new ArgumentNullException(nameof(post));
+            }
+            _dbContext.Remove(post);
+            _dbContext.SaveChanges();
         }
 
         public void Add(Post post)

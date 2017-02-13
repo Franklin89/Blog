@@ -1,4 +1,4 @@
-﻿@model MLSoftware.Web.Model.Post
+﻿@model MLSoftware.Web.ViewModels.PostViewModel
 
 @{
     ViewData["Title"] = Model.Title;
@@ -26,13 +26,13 @@
                 </div>
             }
             <div class="col-lg-12">
-                @if (Model.PostTags != null && Model.PostTags.Any())
+                @if (Model.Tags != null && Model.Tags.Any())
                 {
                     <div class="tags">
                         <i class="fa fa-tags"></i>
-                        @foreach (var tag in Model.PostTags)
+                        @foreach (var tag in Model.Tags)
                         {
-                            <a href="#">@tag.Tag.Description</a>
+                            <a href="#">@tag</a>
                         }
                     </div>
                 }

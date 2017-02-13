@@ -42,7 +42,7 @@ namespace MLSoftware.Web.Controllers
             var postMetadata = _postRepository.GetPostMetadata();
             var viewModel = new HomeViewModel
             {
-                Posts = postMetadata
+                Posts = postMetadata.Select(x => new PostViewModel(x))
             };
             return View(viewModel);
         }
@@ -67,7 +67,7 @@ namespace MLSoftware.Web.Controllers
                 Content = post.Content.Parse()
             };
 
-            return View(post);
+            return View(new PostViewModel(post));
         }
 
         [HttpGet]
@@ -91,15 +91,7 @@ namespace MLSoftware.Web.Controllers
         public IActionResult Edit(int id)
         {
             var draft = _postRepository.Get(id);
-            var viewModel = new PostViewModel
-            {
-                Id = draft.Id,
-                Title = draft.Title,
-                Description = draft.Description,
-                Content = draft.Content.Content,
-                IsDraft = draft.IsDraft,
-                Tags = String.Join(", ", draft.PostTags.Select(x => x.Tag.Description))
-            };
+            var viewModel = new PostViewModel(draft);
             return View(viewModel);
         }
 
@@ -125,7 +117,7 @@ namespace MLSoftware.Web.Controllers
 
                 post.PostTags.Clear();
 
-                var tags = input.Tags.Split(',');
+                var tags = input.TagsString.Split(',');
                 foreach (var tag in tags)
                 {
                     var dbTag = _tagRepository.Get(tag.Trim());
@@ -183,7 +175,7 @@ namespace MLSoftware.Web.Controllers
 
             post.PostTags = new List<PostTag>();
 
-            var tags = input.Tags.Split(',');
+            var tags = input.TagsString.Split(',');
             foreach (var tag in tags)
             {
                 var dbTag = _tagRepository.Get(tag.Trim());
@@ -216,15 +208,15 @@ namespace MLSoftware.Web.Controllers
             if (!input.RiddleResult)
             {
                 ModelState.AddModelError("RiddleResultValue", "Please solve the math problem. Let's fight spam together!");
-
-                // For more information see: https://weblog.west-wind.com/posts/2012/apr/20/aspnet-mvc-postbacks-and-htmlhelper-controls-ignoring-model-changes
-                ModelState.Remove("RiddleValue1");
-                ModelState.Remove("RiddleValue2");
             }
 
             if (!ModelState.IsValid)
             {
-                return View(nameof(Details), _postRepository.Get(input.PostId));
+                // For more information see: https://weblog.west-wind.com/posts/2012/apr/20/aspnet-mvc-postbacks-and-htmlhelper-controls-ignoring-model-changes
+                ModelState.Remove("RiddleValue1");
+                ModelState.Remove("RiddleValue2");
+
+                return View(nameof(Details), new PostViewModel(_postRepository.Get(input.PostId)));
             }
 
             var comment = new Comment
@@ -241,6 +233,29 @@ namespace MLSoftware.Web.Controllers
             return RedirectToAction(nameof(Details), new { id = input.PostId });
         }
 
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var post = _postRepository.Get(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(new PostViewModel(post));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Route("[action]/{id}")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _postRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+
         [ModelMetadataType(typeof(PostViewModel))]
         public class PostInputModel
         {
@@ -254,7 +269,7 @@ namespace MLSoftware.Web.Controllers
 
             public string Content { get; set; }
 
-            public string Tags { get; set; }
+            public string TagsString { get; set; }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MLSoftware.Web.Model;
 
 namespace MLSoftware.Web.ViewModels
 {
@@ -13,6 +14,17 @@ namespace MLSoftware.Web.ViewModels
             RiddleValue2 = random.Next(1, 20);
         }
 
+        public CommentViewModel(Comment comment) : this()
+        {
+            Id = comment.Id;
+            PostId = comment.PostId;
+            Email = comment.Email;
+            Created = comment.Created;
+            Name = comment.Name;
+            Content = comment.Content;  
+        }
+
+        public int Id { get; set; }
         public int PostId { get; set; }
         public string Email { get; set; }
         public DateTime Created { get; set; }
