@@ -6,7 +6,10 @@
 
 <ol class="breadcrumb">
     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-    <li><a asp-controller="Draft" asp-action="Index">Drafts</a></li>
+    @if (Model.IsDraft)
+    {
+        <li><a asp-controller="Draft" asp-action="Index">Drafts</a></li>
+    }
     <li class="active">@Model.Title</li>
 </ol>
 

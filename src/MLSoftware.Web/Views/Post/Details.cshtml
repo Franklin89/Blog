@@ -1,14 +1,15 @@
 ﻿@model MLSoftware.Web.Model.Post
 
-@if (Model.IsDraft)
-{
-    <div class="alert alert-danger text-center">
-        <span class="published-date text-danger">unpublished</span>
-    </div>
+@{
+    ViewData["Title"] = Model.Title;
 }
 
 <ol class="breadcrumb">
     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    @if (Model.IsDraft)
+    {
+        <li><a asp-controller="Draft" asp-action="Index">Drafts</a></li>
+    }
     <li class="active">@Model.Title</li>
 </ol>
 

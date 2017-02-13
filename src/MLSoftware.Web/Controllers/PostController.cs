@@ -85,7 +85,8 @@ namespace MLSoftware.Web.Controllers
                 Id = draft.Id,
                 Title = draft.Title,
                 Description = draft.Description,
-                Content = draft.Content.Content
+                Content = draft.Content.Content,
+                IsDraft = draft.IsDraft
             };
             return View(viewModel);
         }
@@ -107,7 +108,6 @@ namespace MLSoftware.Web.Controllers
             {
                 post.Title = input.Title;
                 post.Description = input.Description;
-
 
                 post.Content.Content = input.Content;
 

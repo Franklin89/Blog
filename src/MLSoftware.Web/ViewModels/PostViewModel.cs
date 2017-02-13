@@ -15,6 +15,8 @@ namespace MLSoftware.Web.ViewModels
 
         public string Content { get; set; }
 
+        public bool IsDraft { get; set; }
+
         public string SuccessMessage { get; set; }
 
         public bool ShowSuccessMessage => !string.IsNullOrEmpty(SuccessMessage);
