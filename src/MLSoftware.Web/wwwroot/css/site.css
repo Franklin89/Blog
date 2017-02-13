@@ -13,3 +13,7 @@
 .col-fixed-110 {
     width: 240px;
 }
+
+.markdown-input {
+    font-family: Consolas, monospace
+}
