@@ -32,13 +32,7 @@ namespace MLSoftware.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var root = HostingEnvironment.ContentRootPath;
-            root = Path.Combine(root, "App_Data");
-            Directory.CreateDirectory(root);
-
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            connection = string.Format(connection, root);
-
             services.AddDbContext<BlogContext>(options => 
             {
                 options.UseSqlite(connection);
