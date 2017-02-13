@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
+using DbUp;
+using System.Reflection;
+using System;
 
 namespace MLSoftware.Web
 {
@@ -27,13 +29,28 @@ namespace MLSoftware.Web
                 .AddJsonFile($"appsettings.{HostingEnvironment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            // Configure Database
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var upgrader =
+                DeployChanges.To
+                    .SQLiteDatabase(connectionString)
+                    .WithScriptsEmbeddedInAssembly(typeof(Startup).GetTypeInfo().Assembly)
+                    .LogToConsole()
+                    .Build();
+
+            var result = upgrader.PerformUpgrade();
+            if (!result.Successful)
+            {
+                throw new Exception("Failed to migrate the database.");
+            }
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<BlogContext>(options => 
+            services.AddDbContext<BlogContext>(options =>
             {
                 options.UseSqlite(connection);
             });
