@@ -54,4 +54,10 @@
     <EmbeddedResource Include="Scripts\0002_TestData.sql" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="urlRewrite.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

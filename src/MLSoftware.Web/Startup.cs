@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using DbUp;
 using System.Reflection;
 using System;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace MLSoftware.Web
 {
@@ -91,6 +92,9 @@ namespace MLSoftware.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseRewriter(new RewriteOptions()
+                .AddIISUrlRewrite(env.ContentRootFileProvider, "urlRewrite.config"));
 
             app.UseStaticFiles();
             app.UseStatusCodePages();
