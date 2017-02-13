@@ -64,5 +64,41 @@
             @Html.Raw(@Model.Content)
         </div>
     </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h2>@Model.Comments.Count Comments</h2>
+            @foreach(var comment in Model.Comments.OrderBy(c => c.Created))
+            {
+                <div class="row comment">
+                    <div class="col-xs-2">
+                        <gravatar gravatar-email="@comment.Email" image-size="108"></gravatar>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <span><strong>@comment.Name</strong></span>
+                            </div>
+                            <div class="col-sm-7">
+                                <span class="published-date pull-right">@comment.Created.ToString("MMMM dd, yyyy hh:mm tt")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @comment.Content
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-lg-12">
+                    <partial name="_CommentPartial" model="@new MLSoftware.Web.ViewModels.CommentViewModel(){ PostId = Model.Id }"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </article>
 

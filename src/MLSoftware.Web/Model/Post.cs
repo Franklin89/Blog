@@ -18,6 +18,8 @@ namespace MLSoftware.Web.Model
         public int PostContentId { get; set; }
         public PostContent Content { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         [NotMapped]
         public bool IsDraft => Published == null;
     }

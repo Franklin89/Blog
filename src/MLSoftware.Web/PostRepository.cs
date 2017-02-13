@@ -19,6 +19,7 @@ namespace MLSoftware.Web
         {
             return _dbContext.Post
                 .Include(x => x.Content)
+                .Include(x => x.Comments)
                 .Include(x => x.PostTags)
                     .ThenInclude(pt => pt.Tag)
                 .SingleOrDefault(x => x.Id == id);

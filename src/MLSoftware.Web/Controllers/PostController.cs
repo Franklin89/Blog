@@ -19,13 +19,20 @@ namespace MLSoftware.Web.Controllers
         private readonly ILogger _logger;
         private readonly IPostRepository _postRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public PostController(IHostingEnvironment env, ILogger<PostController> logger, IPostRepository postRepository, ITagRepository tagRepository)
+        public PostController(
+            IHostingEnvironment env,
+            ILogger<PostController> logger,
+            IPostRepository postRepository,
+            ITagRepository tagRepository,
+            ICommentRepository commentRepository)
         {
             _env = env;
             _logger = logger;
             _postRepository = postRepository;
             _tagRepository = tagRepository;
+            _commentRepository = commentRepository;
         }
 
         [HttpGet]
@@ -122,7 +129,7 @@ namespace MLSoftware.Web.Controllers
                 foreach (var tag in tags)
                 {
                     var dbTag = _tagRepository.Get(tag.Trim());
-                    if(dbTag == null)
+                    if (dbTag == null)
                     {
                         dbTag = new Tag
                         {
@@ -133,7 +140,7 @@ namespace MLSoftware.Web.Controllers
                     post.PostTags.Add(new PostTag
                     {
                         Tag = dbTag
-                    });                
+                    });
                 }
 
                 _postRepository.Update(post);
@@ -200,6 +207,38 @@ namespace MLSoftware.Web.Controllers
             {
                 id = post.Id
             });
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult Comment(CommentViewModel input)
+        {
+            if (!input.RiddleResult)
+            {
+                ModelState.AddModelError("RiddleResultValue", "Please solve the math problem. Let's fight spam together!");
+
+                // For more information see: https://weblog.west-wind.com/posts/2012/apr/20/aspnet-mvc-postbacks-and-htmlhelper-controls-ignoring-model-changes
+                ModelState.Remove("RiddleValue1");
+                ModelState.Remove("RiddleValue2");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Details), _postRepository.Get(input.PostId));
+            }
+
+            var comment = new Comment
+            {
+                PostId = input.PostId,
+                Created = DateTime.UtcNow,
+                Name = input.Name,
+                Email = input.Email,
+                Content = input.Content
+            };
+
+            _commentRepository.Add(comment);
+
+            return RedirectToAction(nameof(Details), new { id = input.PostId });
         }
 
         [ModelMetadataType(typeof(PostViewModel))]

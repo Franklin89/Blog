@@ -6,10 +6,11 @@ namespace MLSoftware.Web
     public class BlogContext : DbContext
     {
         public DbSet<Post> Post { get; set; }
+        public DbSet<PostContent> PostContent { get; set; }
         public DbSet<PostTag> PostTag { get; set; }
         public DbSet<Tag> Tag { get; set; }
 
-        public DbSet<PostContent> PostContent { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         public BlogContext(DbContextOptions options) : base(options)
         {
