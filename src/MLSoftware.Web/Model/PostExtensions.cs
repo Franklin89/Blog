@@ -9,6 +9,11 @@ namespace MLSoftware.Web.Model
         public static string Parse(this PostContent postContent)
         {
             var content = postContent.Content;
+            if (string.IsNullOrEmpty(content))
+            {
+                return string.Empty;
+            }
+
             var pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
             var doc = Markdown.Parse(content, pipeline);
 
