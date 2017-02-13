@@ -29,7 +29,8 @@ namespace MLSoftware.Web
             var posts = _dbContext.Post
                 .Include(x => x.PostTags)
                     .ThenInclude(pt => pt.Tag)
-                .Where(x => x.Published == null);
+                .Where(x => x.Published == null)
+                .OrderByDescending(x => x.Created);
             return posts;
         }
 

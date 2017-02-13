@@ -11,6 +11,7 @@ namespace MLSoftware.Web.Model
         public string Author { get; set; }
         public string Description { get; set; }
         public DateTime? Published { get; set; }
+        public DateTime? Created { get; set; }
 
         public List<PostTag> PostTags { get; set; }
 

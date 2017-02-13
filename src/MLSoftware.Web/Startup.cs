@@ -8,27 +8,37 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace MLSoftware.Web
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; }
+
         public Startup(IHostingEnvironment env)
         {
+            HostingEnvironment = env;
+
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(HostingEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile($"appsettings.{HostingEnvironment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var root = HostingEnvironment.ContentRootPath;
+            root = Path.Combine(root, "App_Data");
+            Directory.CreateDirectory(root);
+
             var connection = Configuration.GetConnectionString("DefaultConnection");
+            connection = string.Format(connection, root);
+
             services.AddDbContext<BlogContext>(options => 
             {
                 options.UseSqlite(connection);

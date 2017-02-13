@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MLSoftware.Web.Model;
 using MLSoftware.Web.ViewModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MLSoftware.Web.Controllers
@@ -144,6 +145,7 @@ namespace MLSoftware.Web.Controllers
 
                 Title = input.Title,
                 Description = input.Description,
+                Created = DateTime.UtcNow,
                 Author = "Matteo"
             };
 
