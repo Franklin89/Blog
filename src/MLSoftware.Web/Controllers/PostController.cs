@@ -117,22 +117,25 @@ namespace MLSoftware.Web.Controllers
 
                 post.PostTags.Clear();
 
-                var tags = input.TagsString.Split(',');
-                foreach (var tag in tags)
+                var tags = input.TagsString?.Split(',');
+                if (tags != null)
                 {
-                    var dbTag = _tagRepository.Get(tag.Trim());
-                    if (dbTag == null)
+                    foreach (var tag in tags)
                     {
-                        dbTag = new Tag
+                        var dbTag = _tagRepository.Get(tag.Trim());
+                        if (dbTag == null)
                         {
-                            Description = tag.Trim()
-                        };
-                    }
+                            dbTag = new Tag
+                            {
+                                Description = tag.Trim()
+                            };
+                        }
 
-                    post.PostTags.Add(new PostTag
-                    {
-                        Tag = dbTag
-                    });
+                        post.PostTags.Add(new PostTag
+                        {
+                            Tag = dbTag
+                        });
+                    }
                 }
 
                 _postRepository.Update(post);
@@ -175,22 +178,25 @@ namespace MLSoftware.Web.Controllers
 
             post.PostTags = new List<PostTag>();
 
-            var tags = input.TagsString.Split(',');
-            foreach (var tag in tags)
+            var tags = input.TagsString?.Split(',');
+            if (tags != null)
             {
-                var dbTag = _tagRepository.Get(tag.Trim());
-                if (dbTag == null)
+                foreach (var tag in tags)
                 {
-                    dbTag = new Tag
+                    var dbTag = _tagRepository.Get(tag.Trim());
+                    if (dbTag == null)
                     {
-                        Description = tag.Trim()
-                    };
-                }
+                        dbTag = new Tag
+                        {
+                            Description = tag.Trim()
+                        };
+                    }
 
-                post.PostTags.Add(new PostTag
-                {
-                    Tag = dbTag
-                });
+                    post.PostTags.Add(new PostTag
+                    {
+                        Tag = dbTag
+                    });
+                }
             }
 
             _postRepository.Add(post);
