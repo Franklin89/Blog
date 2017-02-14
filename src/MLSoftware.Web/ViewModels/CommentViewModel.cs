@@ -32,13 +32,13 @@ namespace MLSoftware.Web.ViewModels
         public int RiddleValue1 { get; set; }
         public int RiddleValue2 { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please solve the math problem. Let's fight spam together!")]
         public int? RiddleResultValue { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your name!")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Some content would be nice!")]
         [MaxLength(5000)]
         public string Content { get; set; }
 

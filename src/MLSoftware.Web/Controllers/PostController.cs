@@ -230,7 +230,10 @@ namespace MLSoftware.Web.Controllers
                 ModelState.Remove("RiddleValue1");
                 ModelState.Remove("RiddleValue2");
 
-                return View(nameof(Details), new PostViewModel(_postRepository.Get(input.PostId)));
+                var post = _postRepository.Get(input.PostId);
+                var viewModel = new PostViewModel(post);
+                viewModel.Content = post.Content?.Parse();
+                return View(nameof(Details), viewModel);
             }
 
             var comment = new Comment
