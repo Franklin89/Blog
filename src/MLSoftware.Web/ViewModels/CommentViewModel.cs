@@ -40,6 +40,7 @@ namespace MLSoftware.Web.ViewModels
 
         [Required(ErrorMessage = "Some content would be nice!")]
         [MaxLength(5000)]
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
         [NotMapped]

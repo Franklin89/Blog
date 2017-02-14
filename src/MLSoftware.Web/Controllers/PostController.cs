@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -216,13 +217,16 @@ namespace MLSoftware.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("[action]")]
-        public IActionResult Comment(CommentViewModel input)
+        public async Task<IActionResult> Comment(CommentViewModel input)
         {
             if (!input.RiddleResult)
             {
                 ModelState.AddModelError("RiddleResultValue", "Please solve the math problem. Let's fight spam together!");
             }
+
+            var post = _postRepository.Get(input.PostId);
 
             if (!ModelState.IsValid)
             {
@@ -230,7 +234,6 @@ namespace MLSoftware.Web.Controllers
                 ModelState.Remove("RiddleValue1");
                 ModelState.Remove("RiddleValue2");
 
-                var post = _postRepository.Get(input.PostId);
                 var viewModel = new PostViewModel(post);
                 viewModel.Content = post.Content?.Parse();
                 return View(nameof(Details), viewModel);
@@ -246,7 +249,23 @@ namespace MLSoftware.Web.Controllers
             };
 
             _commentRepository.Add(comment);
-            _emailService.SendEmailAsync(_mailSettings.DefaultTo, "New comment", "<h1>You recieved a new comment</h1>");
+
+            await _emailService.SendEmailAsync(_mailSettings.DefaultTo, $"New comment: {post.Title}", $@"
+<h1>You recieved a new comment</h1>
+<br>
+<h3>Id:</h3>
+<p>
+{comment.Id}
+</p>
+<h3>From</h3>
+<p>
+{comment.Name}
+</p>
+<h3>Content</h3>
+<p>
+{comment.Content}
+</p>
+");
 
             return RedirectToAction(nameof(Details), new { id = input.PostId });
         }
