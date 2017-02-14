@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MLSoftware.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace MLSoftware.Web.Controllers
         public IActionResult Index()
         {
             var draftPosts = _postRepository.GetDrafts();
-            return View(draftPosts);
+            return View(draftPosts.ToList());
         }
     }
 }

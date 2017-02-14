@@ -4,6 +4,6 @@ namespace MLSoftware.Web.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<PostViewModel> Posts { get; set; }
+        public List<PostViewModel> Posts { get; set; }
     }
 }

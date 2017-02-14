@@ -19,10 +19,10 @@
                 </a>
                 <p class="post-meta">Posted by @item.Author on @item.Published?.ToString("MMMM dd, yyyy hh:mm tt")</p>
             </div>
-                @if (item != Model.Posts.Last())
-                {
-                    <hr>
-                }
+            @if (Model.Posts.IndexOf(item) != Model.Posts.Count - 1)
+            {
+                <hr>
+            }
         }
     </div>
 </div>

@@ -50,7 +50,7 @@ namespace MLSoftware.Web.Controllers
             var postMetadata = _postRepository.GetPostMetadata();
             var viewModel = new HomeViewModel
             {
-                Posts = postMetadata.Select(x => new PostViewModel(x))
+                Posts = postMetadata.Select(x => new PostViewModel(x)).ToList()
             };
             return View(viewModel);
         }

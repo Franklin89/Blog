@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MLSoftware.Web.Model.Post>
+﻿@model List<MLSoftware.Web.Model.Post>
 
 @{
     ViewData["Title"] = "Drafts";
@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         @foreach (var item in Model)
-            {
+        {
             <div class="post-preview">
                 <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">
                     <h2 class="post-title">
@@ -30,7 +30,7 @@
                 </a>
                 <p class="post-meta">Created by @item.Author</p>
             </div>
-            @if (item != Model.Last())
+            @if (Model.IndexOf(item) != Model.Count - 1)
             {
                 <hr>
             }
