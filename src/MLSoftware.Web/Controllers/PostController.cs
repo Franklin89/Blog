@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MLSoftware.Web.Model;
 using MLSoftware.Web.Services;
 using MLSoftware.Web.ViewModels;
@@ -22,6 +23,7 @@ namespace MLSoftware.Web.Controllers
         private readonly ITagRepository _tagRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IEmailService _emailService;
+        private readonly MailSettings _mailSettings;
 
         public PostController(
             IHostingEnvironment env,
@@ -29,7 +31,8 @@ namespace MLSoftware.Web.Controllers
             IPostRepository postRepository,
             ITagRepository tagRepository,
             ICommentRepository commentRepository,
-            IEmailService emailService)
+            IEmailService emailService,
+            IOptions<MailSettings> mailSettings)
         {
             _env = env;
             _logger = logger;
@@ -37,6 +40,7 @@ namespace MLSoftware.Web.Controllers
             _tagRepository = tagRepository;
             _commentRepository = commentRepository;
             _emailService = emailService;
+            _mailSettings = mailSettings.Value;
         }
 
         [HttpGet]
@@ -239,6 +243,7 @@ namespace MLSoftware.Web.Controllers
             };
 
             _commentRepository.Add(comment);
+            _emailService.SendEmailAsync(_mailSettings.DefaultTo, "New comment", "<h1>You recieved a new comment</h1>");
 
             return RedirectToAction(nameof(Details), new { id = input.PostId });
         }
