@@ -12,6 +12,7 @@ using DbUp;
 using System.Reflection;
 using System;
 using Microsoft.AspNetCore.Rewrite;
+using MLSoftware.Web.Services;
 
 namespace MLSoftware.Web
 {
@@ -73,6 +74,8 @@ namespace MLSoftware.Web
             services.AddMvc();
 
             // Register application services
+            services.AddScoped<IEmailService, EmailService>();
+
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
