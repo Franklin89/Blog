@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MLSoftware.Web.Model;
+using MLSoftware.Web.Services;
 using MLSoftware.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,22 @@ namespace MLSoftware.Web.Controllers
         private readonly IPostRepository _postRepository;
         private readonly ITagRepository _tagRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly IEmailService _emailService;
 
         public PostController(
             IHostingEnvironment env,
             ILogger<PostController> logger,
             IPostRepository postRepository,
             ITagRepository tagRepository,
-            ICommentRepository commentRepository)
+            ICommentRepository commentRepository,
+            IEmailService emailService)
         {
             _env = env;
             _logger = logger;
             _postRepository = postRepository;
             _tagRepository = tagRepository;
             _commentRepository = commentRepository;
+            _emailService = emailService;
         }
 
         [HttpGet]

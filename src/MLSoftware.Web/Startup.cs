@@ -30,6 +30,12 @@ namespace MLSoftware.Web
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{HostingEnvironment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            if(HostingEnvironment.IsDevelopment())
+            {
+                builder.AddUserSecrets();
+            }
+
             Configuration = builder.Build();
 
             // Configure Database
@@ -51,10 +57,16 @@ namespace MLSoftware.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration.GetConnectionString("DefaultConnection");
+            // Adds services required for using options.
+            services.AddOptions();
+
+            // Register the IConfiguration instance which MyOptions binds against.
+            services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
+
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BlogContext>(options =>
             {
-                options.UseSqlite(connection);
+                options.UseSqlite(connectionString);
             });
 
             services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);

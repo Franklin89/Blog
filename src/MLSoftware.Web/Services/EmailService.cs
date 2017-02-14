@@ -1,17 +1,22 @@
 using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace MLSoftware.Web.Services
 {
     public class EmailService : IEmailService
     {
         private readonly IHostingEnvironment _hostingEnviroment;
+        private readonly ILogger _logger;
+        private readonly MailSettings _mailSettings;
 
-        public EmailService(IHostingEnvironment hostingEnvironment)
+        public EmailService(IHostingEnvironment hostingEnvironment, ILogger<EmailService> logger, IOptions<MailSettings> mailSettings)
         {
-            // ToDo: Pass in ILogger and Configuration (which will contain thins like smtp host - use UserSecrets for this!!!!)
             _hostingEnviroment = hostingEnvironment;
+            _logger = logger;
+            _mailSettings = mailSettings.Value;
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
