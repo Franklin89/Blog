@@ -53,6 +53,9 @@ namespace MLSoftware.Web.Services
 
             using (var client = new SmtpClient())
             {
+                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
                 await client.ConnectAsync(_mailSettings.Host, _mailSettings.Port, false);
 
                 // Note: since we don't have an OAuth2 token, disable
