@@ -21,7 +21,7 @@ namespace MLSoftware.Web.Services
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Sending email to {0} with the subject {1} message: {2}", email, subject, message);
         }
     }
 }
