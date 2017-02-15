@@ -250,4 +250,9 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/src/MLSoftware.Web/App_Data
+
+node_modules/
+src/*/wwwroot/lib/
+
+*.min.js
+*.min.css
