@@ -91,7 +91,6 @@ gulp.task("csslint", ["lib"], function () {
         .pipe(csslint.reporter());
 });
 
-gulp.task("prepublish", ["lib", "csslint", "jshint", "min"]);
+gulp.task("prepublish", ["lib", "jshint", "min"]);
 
 gulp.task("default", ["prepublish"]);
-0

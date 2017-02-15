@@ -60,7 +60,7 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PrepublishScript" AfterTargets="Build">
+  <Target Name="PrepublishScript" BeforeTargets="Publish">
     <Exec Command="npm install" />
     <Exec Command="gulp prepublish" />
   </Target>
