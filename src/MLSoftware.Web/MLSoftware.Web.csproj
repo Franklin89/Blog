@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot/css\site.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Scripts\0001_CreateDatabase.sql" />
     <None Remove="Scripts\0002_TestData.sql" />
   </ItemGroup>
@@ -41,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <Exec Command="bower install" />
