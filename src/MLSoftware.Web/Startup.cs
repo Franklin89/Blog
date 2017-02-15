@@ -86,6 +86,8 @@ namespace MLSoftware.Web
             services.AddMvc();
 
             // Register application services
+            services.AddSingleton<IObjectMapper, SimpleObjectMapper>();
+
             services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IPostRepository, PostRepository>();
