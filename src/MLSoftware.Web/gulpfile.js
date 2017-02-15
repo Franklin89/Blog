@@ -78,7 +78,7 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["lib", "csslint", "jshint", "min:js", "min:css"]);
+gulp.task("min", ["lib", "jshint", "min:js", "min:css"]);
 
 gulp.task("jshint", ["lib"], function () {
     return gulp.src([paths.js, "!" + paths.minJs])
@@ -86,12 +86,6 @@ gulp.task("jshint", ["lib"], function () {
         .pipe(jshint.reporter())
 });
 
-gulp.task("csslint", ["lib"], function () {
-    return gulp.src([paths.css, "!" + paths.minCss])
-        .pipe(csslint())
-        .pipe(csslint.reporter());
-});
-
-gulp.task("prepublish", ["lib", "csslint", "jshint", "min"]);
+gulp.task("prepublish", ["lib", "jshint", "min"]);
 
 gulp.task("default", ["prepublish"]);
