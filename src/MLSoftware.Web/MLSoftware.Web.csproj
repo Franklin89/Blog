@@ -48,10 +48,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="npm install" />
-    <Exec Command="gulp prepublish" />
-  </Target>
+  
   <ItemGroup>
     <EmbeddedResource Include="Scripts\0001_CreateDatabase.sql" />
     <EmbeddedResource Include="Scripts\0002_TestData.sql" />
@@ -62,5 +59,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="PrepublishScript" BeforeTargets="Publish">
+    <Exec Command="npm install" />
+    <Exec Command="gulp prepublish" />
+  </Target>
 
 </Project>
