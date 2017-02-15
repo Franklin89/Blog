@@ -1,4 +1,4 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding AfterBuild='prepublish' Clean='clean' />
 
 var gulp = require("gulp"),
     del = require("del"),
@@ -28,6 +28,7 @@ var library = {
         require.resolve('font-awesome/css/font-awesome.min.css'),
         // glob pattern to get all files within the directory
         path.dirname(require.resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff')) + '/**',
+        path.dirname(require.resolve('font-awesome/fonts/fontawesome-webfont.woff')) + '/**',
         // declare each file
         require.resolve('jquery/dist/jquery.js'),
         require.resolve('jquery/dist/jquery.min.js'),
