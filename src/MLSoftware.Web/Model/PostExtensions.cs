@@ -14,6 +14,11 @@ namespace MLSoftware.Web.Model
                 return string.Empty;
             }
 
+            return content.Parse();
+        }
+
+        public static string Parse(this string content)
+        {
             var pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
             var doc = Markdown.Parse(content, pipeline);
 

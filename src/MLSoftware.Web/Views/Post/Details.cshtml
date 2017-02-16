@@ -1,4 +1,5 @@
-﻿@model MLSoftware.Web.ViewModels.PostViewModel
+﻿@using MLSoftware.Web.Model
+@model MLSoftware.Web.ViewModels.PostViewModel
 
 @{
     ViewData["Title"] = Model.Title;
@@ -87,7 +88,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                @comment.Content
+                                @Html.Raw(@comment.Content.Parse())
                             </div>
                         </div>
                     </div>
