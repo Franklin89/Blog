@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot/css\site.min.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Scripts\0001_CreateDatabase.sql" />
     <None Remove="Scripts\0002_TestData.sql" />
   </ItemGroup>
