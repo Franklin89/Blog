@@ -87,6 +87,7 @@ namespace MLSoftware.Web
 
             // Register application services
             services.AddSingleton<IObjectMapper, SimpleObjectMapper>();
+            services.AddSingleton<IFeedService, FeedService>();
 
             var markdown = new Markdown.Markdown();
             markdown.UseExtensions();
@@ -97,6 +98,7 @@ namespace MLSoftware.Web
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
