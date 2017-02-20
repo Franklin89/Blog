@@ -88,6 +88,10 @@ namespace MLSoftware.Web
             // Register application services
             services.AddSingleton<IObjectMapper, SimpleObjectMapper>();
 
+            var markdown = new Markdown.Markdown();
+            markdown.UseExtensions();
+            services.AddSingleton<Markdown.IMarkdown>(markdown);
+
             services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IPostRepository, PostRepository>();

@@ -37,7 +37,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="Markdig" Version="0.10.4" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0-msbuild3-final" />
@@ -48,6 +47,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\0001_CreateDatabase.sql" />
     <EmbeddedResource Include="Scripts\0002_TestData.sql" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\MLSoftware.Markdown\MLSoftware.Markdown.csproj" />
   </ItemGroup>
 
   <ItemGroup>

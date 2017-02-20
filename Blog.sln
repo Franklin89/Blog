@@ -9,21 +9,65 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLSoftware.Web", "src\MLSoftware.Web\MLSoftware.Web.csproj", "{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLSoftware.Markdown", "src\MLSoftware.Markdown\MLSoftware.Markdown.csproj", "{15CE64BB-5FC0-4A92-9854-E670F26B92FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D858E6CC-CE03-4B77-A6B6-A1E6AAB5C32B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLSoftware.Markdown.Tests", "tests\MLSoftware.Markdown.Tests\MLSoftware.Markdown.Tests.csproj", "{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|x64.ActiveCfg = Debug|x64
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|x64.Build.0 = Debug|x64
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|x86.ActiveCfg = Debug|x86
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Debug|x86.Build.0 = Debug|x86
 		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|x64.ActiveCfg = Release|x64
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|x64.Build.0 = Release|x64
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|x86.ActiveCfg = Release|x86
+		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB}.Release|x86.Build.0 = Release|x86
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|x64.ActiveCfg = Debug|x64
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|x64.Build.0 = Debug|x64
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|x86.ActiveCfg = Debug|x86
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Debug|x86.Build.0 = Debug|x86
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|x64.ActiveCfg = Release|x64
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|x64.Build.0 = Release|x64
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|x86.ActiveCfg = Release|x86
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE}.Release|x86.Build.0 = Release|x86
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|x64.ActiveCfg = Debug|x64
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|x64.Build.0 = Debug|x64
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|x86.ActiveCfg = Debug|x86
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Debug|x86.Build.0 = Debug|x86
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|x64.ActiveCfg = Release|x64
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|x64.Build.0 = Release|x64
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|x86.ActiveCfg = Release|x86
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A772D5C3-6826-4E0E-9074-E87C3BC0E6AB} = {73EA3D6F-8272-49B9-8E8C-2277CCDB8DA7}
+		{15CE64BB-5FC0-4A92-9854-E670F26B92FE} = {73EA3D6F-8272-49B9-8E8C-2277CCDB8DA7}
+		{F2A8B462-EEB4-4FE4-8C8C-28E92904558F} = {D858E6CC-CE03-4B77-A6B6-A1E6AAB5C32B}
 	EndGlobalSection
 EndGlobal

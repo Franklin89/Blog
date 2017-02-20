@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MLSoftware.Markdown;
 using MLSoftware.Web.Model;
 using MLSoftware.Web.Services;
 using MLSoftware.Web.ViewModels;
@@ -25,6 +26,7 @@ namespace MLSoftware.Web.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IEmailService _emailService;
         private readonly MailSettings _mailSettings;
+        private readonly IMarkdown _markdown;
 
         public PostController(
             IHostingEnvironment env,
@@ -33,7 +35,8 @@ namespace MLSoftware.Web.Controllers
             ITagRepository tagRepository,
             ICommentRepository commentRepository,
             IEmailService emailService,
-            IOptions<MailSettings> mailSettings)
+            IOptions<MailSettings> mailSettings,
+            IMarkdown markdown)
         {
             _env = env;
             _logger = logger;
@@ -42,6 +45,7 @@ namespace MLSoftware.Web.Controllers
             _commentRepository = commentRepository;
             _emailService = emailService;
             _mailSettings = mailSettings.Value;
+            _markdown = markdown;
         }
 
         [HttpGet]
@@ -73,7 +77,7 @@ namespace MLSoftware.Web.Controllers
             post.Content = new PostContent
             {
                 Id = post.Content.Id,
-                Content = post.Content.Parse()
+                Content = _markdown.Execute(post.Content.Content)
             };
 
             return View(new PostViewModel(post));
@@ -235,7 +239,7 @@ namespace MLSoftware.Web.Controllers
                 ModelState.Remove("RiddleValue2");
 
                 var viewModel = new PostViewModel(post);
-                viewModel.Content = post.Content?.Parse();
+                viewModel.Content = _markdown.Execute(post.Content?.Content);
                 return View(nameof(Details), viewModel);
             }
 
@@ -245,7 +249,7 @@ namespace MLSoftware.Web.Controllers
                 Created = DateTime.UtcNow,
                 Name = input.Name,
                 Email = input.Email,
-                Content = input.Content
+                Content = _markdown.Execute(input.Content)
             };
 
             _commentRepository.Add(comment);

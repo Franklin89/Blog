@@ -25,17 +25,30 @@ var library = {
         require.resolve('bootstrap/dist/css/bootstrap.css'),
         require.resolve('bootstrap/dist/css/bootstrap.min.css'),
         require.resolve('font-awesome/css/font-awesome.css'),
-        require.resolve('font-awesome/css/font-awesome.min.css'),
-        require.resolve('prismjs/themes/prism.css'),
+        require.resolve('font-awesome/css/font-awesome.min.css'),  
+        require.resolve('prismjs/themes/prism-okaidia.css'),
         // glob pattern to get all files within the directory
         path.dirname(require.resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff')) + '/**',
         path.dirname(require.resolve('font-awesome/fonts/fontawesome-webfont.woff')) + '/**',
         // declare each file
         require.resolve('jquery/dist/jquery.js'),
         require.resolve('jquery/dist/jquery.min.js'),
-        require.resolve('prismjs/prism.js'),
         // only one file is distributed
         require.resolve('jquery-validation/dist/jquery.validate.js')
+    ]
+}
+
+var prismjs = {
+    base: "node_modules/prismjs",
+    destination: "lib/prismjs",
+    source: [        
+        require.resolve('prismjs/components/prism-core.min.js'),
+        require.resolve('prismjs/components/prism-markup.min.js'),
+        require.resolve('prismjs/components/prism-css.min.js'),
+        require.resolve('prismjs/components/prism-clike.min.js'),
+        require.resolve('prismjs/components/prism-javascript.min.js'),
+        require.resolve('prismjs/components/prism-csharp.min.js'),
+        require.resolve('prismjs/plugins/file-highlight/prism-file-highlight.min.js')
     ]
 }
 
@@ -50,6 +63,12 @@ paths.concatCssDest = paths.webroot + "css/site.min.css";
 gulp.task("lib", ["clean"], function () {
     return gulp.src(library.source, { base: library.base })
         .pipe(gulp.dest(paths.library));
+});
+
+gulp.task('build-prismjs', ["clean", "lib"], function () {
+    return gulp.src(prismjs.source)
+        .pipe(concat('prism.min.js'))
+        .pipe(gulp.dest(paths.webroot + prismjs.destination));
 });
 
 gulp.task("clean:lib", function () {
@@ -88,6 +107,6 @@ gulp.task("jshint", ["lib"], function () {
         .pipe(jshint.reporter())
 });
 
-gulp.task("prepublish", ["lib", "jshint", "min"]);
+gulp.task("prepublish", ["lib", "jshint", "min", "build-prismjs"]);
 
 gulp.task("default", ["prepublish"]);
