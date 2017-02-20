@@ -26,12 +26,14 @@ var library = {
         require.resolve('bootstrap/dist/css/bootstrap.min.css'),
         require.resolve('font-awesome/css/font-awesome.css'),
         require.resolve('font-awesome/css/font-awesome.min.css'),
+        require.resolve('prismjs/themes/prismjs.css'),
         // glob pattern to get all files within the directory
         path.dirname(require.resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff')) + '/**',
         path.dirname(require.resolve('font-awesome/fonts/fontawesome-webfont.woff')) + '/**',
         // declare each file
         require.resolve('jquery/dist/jquery.js'),
         require.resolve('jquery/dist/jquery.min.js'),
+        require.resolve('prismjs/prismjs.js'),
         // only one file is distributed
         require.resolve('jquery-validation/dist/jquery.validate.js')
     ]
