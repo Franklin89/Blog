@@ -48,6 +48,9 @@ var prismjs = {
         require.resolve('prismjs/components/prism-clike.min.js'),
         require.resolve('prismjs/components/prism-javascript.min.js'),
         require.resolve('prismjs/components/prism-csharp.min.js'),
+        require.resolve('prismjs/components/prism-docker.min.js'),
+        require.resolve('prismjs/components/prism-aspnet.min.js'),
+        require.resolve('prismjs/components/prism-bash.min.js'),
         require.resolve('prismjs/plugins/file-highlight/prism-file-highlight.min.js')
     ]
 }
