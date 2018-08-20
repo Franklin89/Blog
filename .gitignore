@@ -256,3 +256,5 @@ src/*/wwwroot/lib/
 
 *.min.js
 *.min.css
+
+App_Data/
