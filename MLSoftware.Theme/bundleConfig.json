@@ -1,0 +1,13 @@
+[{
+        "outputFileName": "wwwroot/css/clean-blog-orchard.min.css",
+        "inputFiles": [
+            "wwwroot/css/clean-blog-orchard.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/css/clean-blog.min.css",
+        "inputFiles": [
+            "wwwroot/css/clean-blog.css"
+        ]
+    }
+]
