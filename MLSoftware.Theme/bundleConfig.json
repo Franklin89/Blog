@@ -9,5 +9,11 @@
         "inputFiles": [
             "wwwroot/css/clean-blog.css"
         ]
+    },
+    {
+        "outputFileName": "wwwroot/js/clean-blog.min.js",
+        "inputFiles": [
+            "wwwroot/js/clean-blog.js"
+        ]
     }
 ]
