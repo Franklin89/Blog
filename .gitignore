@@ -254,7 +254,4 @@ paket-files/
 node_modules/
 src/*/wwwroot/lib/
 
-*.min.js
-*.min.css
-
 App_Data/
