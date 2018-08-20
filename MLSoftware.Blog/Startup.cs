@@ -25,7 +25,12 @@ namespace MLSoftware.Blog
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             // app.UseCookiePolicy();
