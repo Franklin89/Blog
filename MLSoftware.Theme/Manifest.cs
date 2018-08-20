@@ -1,9 +1,9 @@
 using OrchardCore.DisplayManagement.Manifest;
 
 [assembly: Theme(
-    Name = "MLSoftware.Theme",
-    Author = "The Orchard Team",
-    Website = "https://orchardproject.net",
+    Name = "MLSoftware",
+    Author = "MLSoftware",
+    Website = "https://MLSoftware.ch",
     Version = "0.0.1",
     Description = "MLSoftware.Theme"
 )]
