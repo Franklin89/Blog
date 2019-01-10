@@ -6,3 +6,8 @@ Tags:
 ---
 
 ## Installing Wyam
+
+https://erikonarheim.com/posts/using-wyam-blog
+
+https://andyhansen.co.nz/posts/web-config-for-a-static-site
+
