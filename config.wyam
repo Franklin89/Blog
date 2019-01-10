@@ -1,0 +1,10 @@
+#recipe Blog
+#n Wyam.Markdown
+#t CleanBlog
+
+// Customize your settings and add new ones here
+Settings[Keys.Host] = "ml-software.ch";
+Settings[BlogKeys.Title] = "Matteo's Blog";
+Settings[BlogKeys.Description] = "Welcome!";
+
+// Add any pipeline customizations here
