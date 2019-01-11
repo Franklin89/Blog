@@ -6,6 +6,7 @@
 Settings[Keys.Host] = "ml-software.ch";
 Settings[Keys.LinksUseHttps] = "true";
 Settings[BlogKeys.Title] = "Matteo's Blog";
+Settings[BlogKeys.Image] = "/images/home-bg.jpg";
 Settings[BlogKeys.Description] = "My personal blog about Software Development";
 Settings[BlogKeys.Intro] = "bla bla bla bla";
 
