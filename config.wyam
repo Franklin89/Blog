@@ -7,6 +7,6 @@ Settings[Keys.Host] = "ml-software.ch";
 Settings[Keys.LinksUseHttps] = "true";
 Settings[BlogKeys.Title] = "Matteo's Blog";
 Settings[BlogKeys.Description] = "My personal blog about Software Development";
-Settings[BlogKeys.Intro] = "";
+Settings[BlogKeys.Intro] = "bla bla bla bla";
 
 // Add any pipeline customizations here
