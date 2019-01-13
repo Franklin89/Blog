@@ -1,6 +1,7 @@
 [Pp]ackages/
 [Tt]ools/*
 [Oo]utput/
+[Bb]uildServer/
 nuget.exe
 *.zip
 /debug.log
