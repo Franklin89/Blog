@@ -5,6 +5,7 @@ Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET Core 2.2
     - Health Checks
+RedirectFrom: blog/adding-health-checks-to-asp-net-core
 ---
 
 Before ASP.NET Core 2.2 (which is in *preview 1* and can be found [here](https://www.microsoft.com/net/download/dotnet-core/2.2) there was no built in feature for configuring health checks on your web application or API. Health checks or lets say having the possibility to offer an endpoint that shows the state of the application can be very useful. For example for load balancers to check if the application is running as expected. Azure Traffic Manager also supports such a feature where you can hook it up to a health check endpoint of your application and it will automatically unregister the endpoint if it is no longer healthy.
