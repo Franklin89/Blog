@@ -5,6 +5,7 @@ Tags:
     - Azure
     - Serilog
     - Diagnostics
+RedirectFrom: blog/writing-to-azure-diagnostics-log-stream-using-serilog
 ---
 
 Inside the Azure Portal it is possible to stream your log from an Azure App Service directly to a console, which is really handy in my opinion if you need to quickly debug something and you want to see in "real time" what is being written to your log. But first we have to turn on the feature.

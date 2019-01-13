@@ -6,6 +6,7 @@ Tags:
     - FluentValidation
     - jQuery
     - Client Side
+RedirectFrom: blog/extending-client-side-validation-with-fluentvalidation-and-jquery-unobtrusive-in-an-asp-net-core-application
 ---
 
 FluentValidation is an ["A popular .NET library for building strongly-typed validation rules."](https://fluentvalidation.net/). I have been using it in different projects and I really like that you can keep your view models without any validation attributes on the properties, so that they can be reused where ever possible. FluentValidation has the concept of `RuleSets` that can be used to validate your model depending on your context. Maybe you have a scenario where you validate more properties while editing an object and only need the minimal properties to be validated while creating the object.

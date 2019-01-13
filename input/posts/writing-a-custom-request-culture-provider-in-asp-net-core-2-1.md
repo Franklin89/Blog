@@ -5,6 +5,7 @@ Tags:
     - ASP.NET Core 2.1
     - Web
     - Localization
+RedirectFrom: blog/writing-a-custom-request-culture-provider-in-asp-net-core-2-1
 ---
 
 ASP.NET Core already delivers a handful of request culture providers. But what if you do not want to use one of the default request culture provider like: `CookieRequestCultureProvider`. With just a little bit of code it is possible to implement your custom way of setting the request culture. We had the requirement that a user can store his desired culture in his profile and so we had to create a custom culture provider.

@@ -4,6 +4,7 @@ Image: /images/home-bg.jpg
 Tags: 
     - GDPR
     - ASP.NET Core 2.1
+RedirectFrom: blog/cookierequestcultureprovider-with-cookie-consent
 ---
 
 A few times I came across this small issue that can be very time consuming because it is not the first thing you think of why something isn't working. Since GDPR and the cookie policy feature came in ASP.NET Core 2.1, the `CookieRequestCultureProvider` in combination with the sample code from Microsoft (that you can fine [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-2.1#set-the-culture-programmatically) can cause some side effects that might cost you some time before realizing why it is not working. The sample code creates a cookie for the user on the server and appends it to the response. 

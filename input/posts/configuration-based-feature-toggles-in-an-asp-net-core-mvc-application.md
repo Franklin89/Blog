@@ -5,6 +5,7 @@ Tags:
     - ASP.NET CORE 2.1
     - Configuration
     - Feature Toggle
+RedirectFrom: blog/configuration-based-feature-toggles-in-an-asp-net-core-mvc-application
 ---
 
 In this post I want to show a very simple way of implementing a feature toggle mechanism, that is based on the `appsettings.json` file. A feature toggle is used to disable or enable a feature during runtime without changing the code. For example toggling a certain feature in your software based on region, tenant, user or a simple boolean.

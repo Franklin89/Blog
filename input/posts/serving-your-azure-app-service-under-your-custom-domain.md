@@ -5,6 +5,7 @@ Image: /images/home-bg.jpg
 Tags: 
     - Azure
     - Azure App Service
+RedirectFrom: blog/serving-your-azure-app-service-under-your-custom-domain
 ---
 
 If you host your App Service on Azure you get a default address that is a sub domain of `azurewebsites.net`. If you are not just hosting a backend or personal web application where the url doesn't matter, you might want to add your custom domain. In this blog post I want to show a few things that you have to set up to achieve.

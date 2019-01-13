@@ -5,6 +5,7 @@ Tags:
     - MVC
     - ASP.NET Core 2.1
     - UX
+RedirectFrom: blog/creating-a-busy-indicator-for-an-asp-net-core-mvc-application
 ---
 
 It is essential to a good user experience to give feedback to the user if the application is processing a request. We know this scenario from single page applications or while reloading partial parts of a website. But what if we have a classic server rendered web application like a ASP.NET Core MVC web application? In this blog post I will show a very simple way you can display a busy indicator for your ASP.NET Core MVC application.

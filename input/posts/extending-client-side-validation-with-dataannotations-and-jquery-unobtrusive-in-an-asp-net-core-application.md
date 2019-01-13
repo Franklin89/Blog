@@ -6,6 +6,7 @@ Tags:
     - DataAnnotations
     - jQuery
     - Client Side
+RedirectFrom: blog/extending-client-side-validation-with-dataannotations-and-jquery-unobtrusive-in-an-asp-net-core-application
 ---
 
 In my last blog post [Extending Client Side Validation with FluentValidation and jQuery Unobtrusive in an ASP.NET Core Application](https://ml-software.ch/blog/extending-client-side-validation-with-fluentvalidation-and-jquery-unobtrusive-in-an-asp-net-core-application), I showed how to extend the client side validation with FluentValidation. In this blog post I want to continue this path, but instead of using FluentValidation I will show how to do this by writing a custom DataAnnotation attribute.
