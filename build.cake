@@ -34,7 +34,7 @@ Task("Preview")
             UpdatePackages = true,
             Preview = true,
             Watch = true
-        });        
+        });
     });
 
 Task("Netlify")
