@@ -40,4 +40,8 @@ https://andyhansen.co.nz/posts/web-config-for-a-static-site
 
 ## URL Rewrite for old links from `/blog` to `/posts`
 
+- RedirectFrom
+
 ## Adding disqus comments back to my page
+
+- Disqus Migration Tool
