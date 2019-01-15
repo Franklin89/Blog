@@ -15,3 +15,23 @@ Since I am using the simple ASP.NET Core extension method provided by Microsoft,
 
 After searching the GitHub repository I found the following [pull request](https://github.com/aspnet/AspNetCore/pull/6338) that pretty much describes the problem and provides the solution as well.
 
+## What I need to change
+
+Until now I have been using the `AddGoogle()` extension method provided in the `Microsoft.AspNetCore.Authentication.Google`.
+
+```chsharp
+var clientId = configuration["Authentication:Google:ClientId"];
+var clientSecret = configuration["Authentication:Google:ClientSecret"];
+if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
+{
+    authBuilder.AddGoogle(options =>
+    {
+        options.ClientId = clientId;
+        options.ClientSecret = clientSecret;
+    });
+}
+```
+
+Since the [pull request](https://github.com/aspnet/AspNetCore/pull/6338) has not yet been merged I will need to use a different approach. The next option I have is to use the OIDC provider to connect to google.
+
+
