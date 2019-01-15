@@ -32,6 +32,4 @@ if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
 }
 ```
 
-Since the [pull request](https://github.com/aspnet/AspNetCore/pull/6338) has not yet been merged I will need to use a different approach. The next option I have is to use the OIDC provider to connect to google.
-
-
+Since the [pull request](https://github.com/aspnet/AspNetCore/pull/6338) has not yet been merged I will need to use a different approach. The next option I have is to use the OIDC provider to connect to Google.
