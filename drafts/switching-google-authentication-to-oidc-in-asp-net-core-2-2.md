@@ -14,7 +14,7 @@ Google has announced to shutdown the Google+ API due to previous data leaks. The
 
 Since I am using the simple ASP.NET Core extension method provided by Microsoft, I thought the easiest way to would be to see if there is an open issue or pull request in their repository. This is one of the aspects why Open Source Software development is great :-)
 
-After searching the GitHub repository I found the following [pull request](https://github.com/aspnet/AspNetCore/pull/6338) that pretty much describes the problem and provides the solution as well.
+After searching the GitHub repository I found the following [pull request](https://github.com/aspnet/AspNetCore/pull/6338) that pretty much describes the problem.
 
 ## What I need to change
 
@@ -33,7 +33,7 @@ if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
 }
 ```
 
-Since the [pull request](https://github.com/aspnet/AspNetCore/pull/6338) has not yet been merged I will need to use a different approach. The next option I have is to use the OIDC provider to connect to Google. In the long term this might even be better, because I will be using the generic OIDC Provider.
+Since the [pull request](https://github.com/aspnet/AspNetCore/pull/6338) has been merged but the release has not been made at the time of writing this blog post. The next option I have is to use the OIDC provider to connect to Google. In the long term this might even be better, because I will be using the generic OIDC Provider.
 
 ### Switch to the OpenID Connect Provider to Authenticate with Google
 
