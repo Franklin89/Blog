@@ -9,6 +9,6 @@ Settings[BlogKeys.Title] = "Matteo's Blog";
 Settings[BlogKeys.Image] = "/images/home-bg.jpg";
 Settings[BlogKeys.Description] = "Software Development";
 Settings[BlogKeys.Intro] = "Hi! This is my personal blog about software development. Where I try to keep all my work so that I can go back and see how I did things and also to share it with the community!";
-Settings["OgImage"] = "/images/me.jpg";
+Settings["OgImage"] = "/images/og-image.jpg";
 
 // Add any pipeline customizations here
