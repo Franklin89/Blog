@@ -42,12 +42,20 @@
         <meta property="og:url" content="@Context.GetLink(Model, true)" />
         @if(Model.String("ogimage") != null)
         {
-            <meta property="og:image" content="@Context.GetLink(Model.String("ogimage"), true)" />
+                <meta property="og:image" content="@Context.GetLink(Model.String("ogimage"), true)" />
+        }
+        @if(Model.String(BlogKeys.Excerpt) != null)
+        {
+                
+                var description = Model.String(BlogKeys.Excerpt);
+                description = description.Substring(3, (description.Length - 7));
+                
+                <meta property="og:description" content="@description" />
         }
 
         <script src="@Context.GetLink("/assets/js/jquery.min.js")"></script>
-        <script src="@Context.GetLink("/assets/js/bootstrap.min.js")"></script>     
-        <script src="@Context.GetLink("/assets/js/highlight.pack.js")"></script>   
+        <script src="@Context.GetLink("/assets/js/bootstrap.min.js")"></script>
+        <script src="@Context.GetLink("/assets/js/highlight.pack.js")"></script>
         <script src="@Context.GetLink("/assets/js/clean-blog.js")"></script>
         <script src="@Context.GetLink("/assets/js/d3.v3.min.js")"></script>
         <script src="@Context.GetLink("/assets/js/trianglify.min.js")"></script>
