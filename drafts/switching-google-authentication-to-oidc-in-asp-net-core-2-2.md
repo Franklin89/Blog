@@ -8,7 +8,7 @@ Tags:
     - OpenID Connect
 ---
 
-Google has announced to shutdown the Google+ API due to previous data leaks. They have [announced](https://developers.google.com/+/api-shutdown) that the will shutdown the Google+ APIs on March 7, 2019. This is pretty soon and I have an application in production that uses the Google+ API for authentication. In the post by Google it even says that the shutdown is beginning at the end of January 2019 and that API calls might fail. That is just a few days from now. So I better hurry and start updating that project.
+Google has announced to shutdown the Google+ API due to previous data leaks. They have [announced](https://developers.google.com/+/api-shutdown) that the will shutdown the Google+ APIs on March 7, 2019. This is pretty soon and I have an application in production that uses the Google+ API for authentication. In the post by Google it even says that the shutdown will start at the end of January 2019 and that API calls might fail. That is just a few days from now. So I better hurry and start updating that project.
 
 ## What to do next?
 
