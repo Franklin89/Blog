@@ -1,7 +1,6 @@
 Title: Serving your Azure App Service under your custom domain
 Lead: Includes redirecting from your azurewebsites.net to your custom domain
 Published: 11/15/2018
-Image: /images/home-bg.jpg
 Tags: 
     - Azure
     - Azure App Service

@@ -1,6 +1,5 @@
 Title: Extending Client Side Validation with FluentValidation and jQuery Unobtrusive in an ASP.NET Core Application
 Published: 10/25/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET CORE 2.1
     - FluentValidation

@@ -1,6 +1,5 @@
 Title: SQL Server Management Studio refreshing IntelliSense Cache
 Published: 8/22/2018
-Image: /images/home-bg.jpg
 Tags: 
     - SQL Server Mangement Studio
 RedirectFrom: blog/sql-server-management-studio-refreshing-intellisense-cache

@@ -1,6 +1,5 @@
 Title: CookieRequestCultureProvider with GDPR Cookie Consent
 Published: 8/30/2018
-Image: /images/home-bg.jpg
 Tags: 
     - GDPR
     - ASP.NET Core 2.1

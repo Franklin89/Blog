@@ -1,6 +1,5 @@
 Title: Getting the base URL for an ASP.NET Core MVC web application in your static JavaScript files
 Published: 12/11/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET CORE 2.1
     - Client Side

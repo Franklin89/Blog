@@ -1,7 +1,6 @@
 Title: Adding health checks to ASP.NET Core
 Lead: Health checks are now a feature of ASP.NET Core 2.2
 Published: 8/29/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET Core 2.2
     - Health Checks

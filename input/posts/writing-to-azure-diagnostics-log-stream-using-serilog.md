@@ -1,6 +1,5 @@
 Title: Writing to Azure Diagnostics Log Stream using Serilog
 Published: 9/10/2018
-Image: /images/home-bg.jpg
 Tags: 
     - Azure
     - Serilog

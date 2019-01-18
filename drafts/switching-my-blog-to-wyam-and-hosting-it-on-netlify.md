@@ -1,6 +1,5 @@
 Title: Switching my blog to Wyam and hosting it on Netlify
 Published: 1/11/2019
-Image: /images/home-bg.jpg
 Tags: 
     - Wyam
     - Blog

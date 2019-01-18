@@ -1,6 +1,5 @@
 Title: Creating a busy indicator for an ASP.NET Core MVC Application
 Published: 10/28/2018
-Image: /images/home-bg.jpg
 Tags: 
     - MVC
     - ASP.NET Core 2.1

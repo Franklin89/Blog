@@ -1,6 +1,5 @@
 Title: Extending Client Side Validation with DataAnnotations and jQuery Unobtrusive in an ASP.NET Core Application
 Published: 11/07/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET CORE 2.1
     - DataAnnotations

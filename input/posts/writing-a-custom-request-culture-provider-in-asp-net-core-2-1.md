@@ -1,6 +1,5 @@
 Title: Writing a custom request culture provider in ASP.NET Core 2.1
 Published: 8/23/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET Core 2.1
     - Web

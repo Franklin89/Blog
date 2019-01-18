@@ -1,6 +1,5 @@
 Title: Configuration based feature toggles in an ASP.NET Core MVC Application
 Published: 11/30/2018
-Image: /images/home-bg.jpg
 Tags: 
     - ASP.NET CORE 2.1
     - Configuration
