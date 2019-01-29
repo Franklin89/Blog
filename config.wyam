@@ -12,3 +12,15 @@ Settings[BlogKeys.Intro] = "Hi! This is my personal blog about software developm
 Settings["OgImage"] = "/images/og-image.png";
 
 // Add any pipeline customizations here
+
+// Drafts
+Pipelines.Add("Drafts",
+    ReadFiles("drafts/*.md"),
+    FrontMatter(Yaml()),
+    Markdown()
+        .UseExtensions(),
+    WriteFiles(".html").OnlyMetadata(),
+    Razor()
+        .WithLayout("/_DraftPostLayout.cshtml"),
+    WriteFiles()
+);
