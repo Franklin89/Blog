@@ -1,6 +1,3 @@
-// The following environment variables need to be set for Publish target:
-// NETLIFY_TOKEN
-
 #tool "nuget:https://api.nuget.org/v3/index.json?package=Wyam&version=2.0.0"
 #addin "nuget:https://api.nuget.org/v3/index.json?package=Cake.Wyam&version=2.0.0"
 #addin "NetlifySharp"
@@ -12,6 +9,10 @@ using NetlifySharp;
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
+
+//////////////////////////////////////////////////////////////////////
+// TASKS
+//////////////////////////////////////////////////////////////////////
 
 Task("Build")
     .Does(() =>
@@ -37,7 +38,7 @@ Task("Preview")
         });
     });
 
-Task("Netlify")
+Task("Deploy")
     .Does(() =>
     {
         var netlifyToken = EnvironmentVariable("NETLIFY_TOKEN");
@@ -60,7 +61,7 @@ Task("Default")
     
 Task("BuildServer")
     .IsDependentOn("Build")
-    .IsDependentOn("Netlify");
+    .IsDependentOn("Deploy");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
