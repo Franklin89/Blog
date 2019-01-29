@@ -1,5 +1,5 @@
 Title: Switching my blog to Wyam and hosting it on Netlify
-Published: 1/11/2019
+Published: 1/2/2019 16:00:00
 Tags: 
     - Wyam
     - Blog
@@ -65,7 +65,7 @@ Tags:
 Blog content …
 ```
 
-## Changing the default layout
+## Adjusting the default layout
 
 // TODO
 
