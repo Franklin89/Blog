@@ -81,10 +81,10 @@ Then I added a form to my `Index.cshtml` to enable passing in the `firstname` an
 ```html
 <form asp-controller="Report" asp-action="Create" method="post">
     <div class="form-group">
-        <input class="form-control" name="firstname"placeholder="Firstname" />
+        <input class="form-control" name="firstname"placeholder="Firstname" autocomplete="false" />
     </div>
     <div class="form-group">
-        <input class="form-control" name="lastname" placeholder="Lastname" />
+        <input class="form-control" name="lastname" placeholder="Lastname" autocomplete="false" />
     </div>
     <button class="btn btn-primary" type="submit">Create Report</button>
 </form>
@@ -92,10 +92,14 @@ Then I added a form to my `Index.cshtml` to enable passing in the `firstname` an
 
 Now when I run this application and navigate to the start page, I can enter a first- and lastname and click `Create Report`. This will call into the JavaScript world, render the `*.odt` template and download the rendered file.
 
-// TODO: Create a gif --> Entering the first and lastname, Click Create Report, Open the report
+![gif](/posts/images/carbone.gif)
 
 ## Summary
 
-// TODO: Sum up what we have achieved here
+In this blog post I tried to show two things. First I showed the possibility to call into JavaScript and therefor the possibility to call your favorite NPM package which is awesome, but you also have to be careful and make sure you know what you are calling. The second thing I wanted to show with this blog post was how easy you can use word templates and then render them.
+
+There is a possibility to extend this by adding the template path as a parameter and adding options. I still have to test out the conversion to PDF for example but that should not be an issue. Just have to make sure that LibreOffice is installed because that is used for the conversion.
+
+If you like this blog post drop a comment or buy me a coffee at the bottom of the page...
 
 Source Code is available on my [GitHub](https://github.com/Franklin89/AspNetCoreNodeServices)
