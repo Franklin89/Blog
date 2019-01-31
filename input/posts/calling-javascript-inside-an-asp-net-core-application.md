@@ -1,6 +1,6 @@
 Title: Calling JavaScript inside an ASP.NET Core 2.2 application
 Lead: This enables you to call your favorite NPM package from in ASP.NET Core backend
-Published: 1/31/2019 14:00:00
+Published: 1/31/2019 16:45:00
 Tags:
     - ASP.NET Core 2.2
     - carbone.io
