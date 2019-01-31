@@ -21,7 +21,7 @@ First we have to add a package reference to `Microsoft.AspNetCore.NodeServices`.
 </ItemGroup>
 ```
 
-Next we have to register the `NodeServices` with the DI container. This is done in the `ConfigureServices()`
+Next we have to register the `NodeServices` with the DI container. This is done in the `ConfigureServices()` method
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -43,7 +43,7 @@ public ReportController(INodeServices nodeServices)
 }
 ```
 
-Create a folder where all your server side JavaScript code will go. Then add a JavaScript file, for my example I used `./Node/carbone.js`. Inside this JavaScript file we export the methods that we want to be able to call from the C# code. We could add a thrid parameter for other options, for example for passing in the template. But for my small POC I used the simple example that was provided inside the `node_modules` folder.
+Create a folder where all your server side JavaScript code will go. Then add a JavaScript file, for my example I used `./Node/carbone.js`. Inside this JavaScript file we export the methods that we want to be able to call from the C# code. For my small POC I used the simple example template that was provided inside the `node_modules` folder. The JavaScript method call could be extended to also take in a third parameter with options such as template path or the file output name.
 
 ```JavaScript
 const carbone = require('carbone');
@@ -98,7 +98,7 @@ Now when I run this application and navigate to the start page, I can enter a fi
 
 In this blog post I tried to show two things. First I showed the possibility to call into JavaScript and therefor the possibility to call your favorite NPM package which is awesome, but you also have to be careful and make sure you know what you are calling. The second thing I wanted to show with this blog post was how easy you can use word templates and then render them by using the [Carbone.io](https://carbone.io) reporting engine.
 
-There are many possibilities to extend this quick sample by adding the template path as a parameter and adding other options. I still have to test out the conversion to PDF for example but that should not be an issue. Just have to make sure that LibreOffice is installed because that is used for the conversion.
+There are many possibilities to extend this POC by adding the template path as a parameter and adding other options. I still have to test out the conversion to PDF and other formats  but that should not be an issue. Just have to make sure that LibreOffice is installed because that is used for the conversion.
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page...
 
