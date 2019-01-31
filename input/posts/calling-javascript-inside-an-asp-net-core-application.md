@@ -1,6 +1,6 @@
 Title: Calling JavaScript inside an ASP.NET Core 2.2 application
-Lead: This enables you to call your favorite NPM package from your ASP.NET Core backend
-Published: 1/30/2019 07:00:00
+Lead: This enables you to call your favorite NPM package from in ASP.NET Core backend
+Published: 1/31/2019 14:00:00
 Tags:
     - ASP.NET Core 2.2
     - carbone.io
@@ -12,7 +12,7 @@ In this blog post I want to share how I got the [Carbone.io](https://carbone.io)
 
 ## How to integrate a node service in an ASP.NET Core application
 
-First we have to add a package reference to `Microsoft.AspNetCore.NodeServices`. We need the `NodeServices` package to get all the required dependencies for calling into JavaScript in our backend. By using this we most of the npm packages out there.
+First we have to add a package reference to `Microsoft.AspNetCore.NodeServices`. We need the `NodeServices` package to get all the required dependencies for calling into JavaScript in our backend. By using this we have the possibility to call into most of the npm packages out there.
 
 ```xml
 <ItemGroup>
@@ -21,7 +21,7 @@ First we have to add a package reference to `Microsoft.AspNetCore.NodeServices`.
 </ItemGroup>
 ```
 
-Next we have to register the `NodeServices` with the DI container. This can be done in the `ConfigureServices()`
+Next we have to register the `NodeServices` with the DI container. This is done in the `ConfigureServices()`
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -32,7 +32,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Now we have the possibility to inject an `INodeServices` in our application. The `INodeServices` is an API through which .NET code can make calls into JavaScript that runs in a Node environment.
+Now we have the possibility to inject `INodeServices` in our application. The `INodeServices` is an API through which .NET code can make calls into JavaScript that will be executed in a Node environment.
 
 ```csharp
 private readonly INodeServices _nodeServices;
@@ -60,7 +60,7 @@ module.exports = {
 };
 ```
 
-Now inside of our `IndexModel` where we injected the `INodeServies` through the constructor we can call the exported method `create`:
+Now inside of our `ReportController` where we injected the `INodeServices` through the constructor we can call the exported method `create`:
 
 ```csharp
 [HttpPost]
@@ -96,9 +96,9 @@ Now when I run this application and navigate to the start page, I can enter a fi
 
 ## Summary
 
-In this blog post I tried to show two things. First I showed the possibility to call into JavaScript and therefor the possibility to call your favorite NPM package which is awesome, but you also have to be careful and make sure you know what you are calling. The second thing I wanted to show with this blog post was how easy you can use word templates and then render them.
+In this blog post I tried to show two things. First I showed the possibility to call into JavaScript and therefor the possibility to call your favorite NPM package which is awesome, but you also have to be careful and make sure you know what you are calling. The second thing I wanted to show with this blog post was how easy you can use word templates and then render them by using the [Carbone.io](https://carbone.io) reporting engine.
 
-There is a possibility to extend this by adding the template path as a parameter and adding options. I still have to test out the conversion to PDF for example but that should not be an issue. Just have to make sure that LibreOffice is installed because that is used for the conversion.
+There are many possibilities to extend this quick sample by adding the template path as a parameter and adding other options. I still have to test out the conversion to PDF for example but that should not be an issue. Just have to make sure that LibreOffice is installed because that is used for the conversion.
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page...
 
