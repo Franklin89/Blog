@@ -1,19 +1,17 @@
 Title: Update - Implementing a custom ITicketStore for ASP.NET Core Identity
 Lead: This adds the ability for a user to remotely log out from his sessions or invalidate any session server side
-Published: 2/26/2019 10:15
+Published: 2/28/2019 11:00
 Tags: 
     - ASP.NET Core 2.2
     - Authentication
     - ASP.NET Core Identity
 ---
 
-// TODO: Change from `We` to `I`
+After my last [blog post](https://ml-software.ch/posts/implementing-a-custom-iticketstore-for-asp-net-core-identity) about implementing a custom `ITicketStore` to handle remote logout, I got some interesting input from friends on how I could implement the missing pieces I had at the end of my last post.
 
-After my last [blog post](https://ml-software.ch/posts/implementing-a-custom-iticketstore-for-asp-net-core-identity) about implementing a custom `ITicketStore` to handle remote logout, I got some interesting input from friends on how we could implement the missing pieces we still had at the end of my last post.
+I wanted to add some more metadata to an `AuthenticationTicket` like the browser or operating the system associated with the session. While writing the MVP it was unsure what the best way was to actually get that data.
 
-I still wanted to add some more metadata to an `AuthenticationTicket` like the browser or operating the system associated with the session. While writing the MVP it was unsure what the best way was to actually get that data.
-
-So what I ended up implementing instead of passing in the `DbContextOptionsBuilder` to the `CustomTicketStore`, I passed in the `IServiceCollection` while configuring the application cookie. Inside of the `CustomTicketStore` I build the service provider and create a scope on which we can get the required services. It is possible to get an instance of the `IHttpContextAccessor` which allows access to the current `HttpContext`. From this we can get all sorts of metadata and associate them with the `AuthenticationTicket`. In the implementation below I get the remote IP address and the User-Agent header from the `HttpContext`. By using a NuGet package called `UAParser` it makes it simple to parse the information that interests us from the User-Agent header like: browser, browser version and operating system. With the remote IP address we could now do a GeoLocation lookup and also display that information to the user.
+What I ended up implementing: instead of passing in the `DbContextOptionsBuilder` to the `CustomTicketStore`, I passed in the `IServiceCollection` while configuring the application cookie. Inside of the `CustomTicketStore` I build the service provider and create a scope on which we can get the required services. It is possible to get an instance of the `IHttpContextAccessor` which allows access to the current `HttpContext`. From this we can get all sorts of metadata and associate them with the `AuthenticationTicket`. In the implementation below I get the remote IP address and the User-Agent header from the `HttpContext`. By using a NuGet package called `UAParser` it makes it simple to parse the information that interests us from the User-Agent header like: browser, browser version and operating system. With the remote IP address we could now do a GeoLocation lookup and also display that information to the user.
 
 ## Updated CustomTicketStore
 
@@ -137,7 +135,7 @@ public class CustomTicketStore : ITicketStore
                 }
             }
 
-            await context.AuthenticationTickets.AddAsync(authenticationTicket);
+            context.AuthenticationTickets.Add(authenticationTicket);
             await context.SaveChangesAsync();
 
             return authenticationTicket.Id.ToString();
@@ -171,6 +169,6 @@ We can now update the user interface to something more compelling for the user:
 
 ## Summary
 
-After this small update I am happy with what I have. But I am still unsure if this will scale without a cache in place. We are still hitting the database many times in our `RetrieveAsync` method. We could implement a cache with a absolute expiration? I will update this post if I have that in place.
+After this small update I am happy with what I have. But I am still unsure if this will scale without a cache in place. We are still hitting the database many times in our `RetrieveAsync` method. We could implement a cache with an absolute expiration? This might cause some other issues, but I will have to do some load tests and see what they show. I will update this post if I have that in place. Thank you @Stephan for the inputs and feedback.
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page...
