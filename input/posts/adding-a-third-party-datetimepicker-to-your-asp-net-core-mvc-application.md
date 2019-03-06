@@ -1,38 +1,44 @@
-Title: Adding bootstrap-datepicker to your ASP.NET Core MVC Application
+Title: Adding a third party datetime picker to your ASP.NET Core MVC Application
 Lead: 
-Published: 2/21/2019 18:45:00
+Published: 3/4/2019 18:45:00
 Tags:
     - ASP.NET Core 2.2
     - Bootstrap
-    - Bootstrap-Datepicker
+    - DateTime
     - MVC
     - UX
 ---
 
-In this blog post I want to show something that is trivial and yet always causes me headaches. DateTime pickers have always been a pain to implement, and there are so many ways to accomplish them. For my own reference and maybe for someone out there that is looking for a solution this is how I implement DateTime pickers using Bootstrap-Datepicker including localization. 
+In this blog post I want to show something that is trivial and yet always causes me headaches. DateTime pickers have always been a pain to implement, and there are so many ways to accomplish them. For my own reference and maybe for someone out there that is looking for a solution this is how I implement DateTime pickers using tempusdominus-bootstrap-4 including localization and some of its problems it brings.
 
 ## Installing the required package 
-We need to install the required javascript. In most of my projects I use libman but you could also use npm or a cdn. 
+We need to install the required packages. In most of my projects I use libman but you could also use npm or a cdn. The tempusdominus-bootstrap-4 package requires us to also include `moment.js` which is a very useful package if you are working with DateTime in JavaScript and you most likly already know it anyways.
 
 ```json 
 {
-    "library": "bootstrap-datepicker@1.8.0", 
-    "destination": "wwwroot/lib/bootstrap-datepicker", 
-    "files": [ "css/bootstrap-datepicker.min.css", "js/bootstrap-datepicker.min.js", "locales/bootstrap-datepicker.de.min.js" ] 
-} 
+    "library": "tempusdominus-bootstrap-4@5.1.2",
+    "destination": "wwwroot/lib/datepicker"
+},
+{
+    "library": "moment.js@2.24.0",
+    "destination": "wwwroot/lib/momentjs",
+    "files": [ "locale/de-ch.js", "moment.min.js" ]
+}
 ```
 
 Add the packages to the `_Layout.cshtml`:
 
 Inside the `head` tag:
 ```html
-<link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet" href="~/lib/datepicker/css/bootstrap-datepicker.min.css" />
 ```
 
 At the bottom of you `_Layout.cshtml`:
 
 ```html
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="~/lib/momentjs/moment.min.js"></script>
+<script src="~/lib/momentjs/locale/de-CH.js"></script>
+<script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.min.js"></script>
 ```
 
 ## Updating the HTML
@@ -175,5 +181,3 @@ services.AddMvc()
 As we all now DateTime is one of the hardest things to get right in software development. And there are also some issues I know that we can get into with the approach I used above. For example if we register the `DateTimeModelBinder` globally, use a query string parameter and you would like to copy the url and send it to a colleague and he uses a different locale this approach will not work. A solution to this would be to use a special format and model provider for query string parameters e.g. `yyyy-MM-dd`.
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page...
-
-Source Code is available on my [GitHub](https://github.com/Franklin89/DateTimePicker)
