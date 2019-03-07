@@ -1,6 +1,6 @@
 Title: Adding a third party datetime picker to your ASP.NET Core MVC Application
 Lead: 
-Published: 3/4/2019 18:45:00
+Published: 3/6/2019 08:45:00
 Tags:
     - ASP.NET Core 2.2
     - Bootstrap
@@ -26,9 +26,8 @@ We need to install the required packages. In most of my projects I use libman bu
 }
 ```
 
-Add the packages to the `_Layout.cshtml`:
+Add the packages to the `_Layout.cshtml`, inside the `head` tag:
 
-Inside the `head` tag:
 ```html
 <link rel="stylesheet" href="~/lib/datepicker/css/bootstrap-datepicker.min.css" />
 ```
@@ -42,60 +41,83 @@ At the bottom of you `_Layout.cshtml`:
 ```
 
 ## Updating the HTML
-There is not much that I had to change on the HTML code. Just had to add the `datepicker` class to the input fields.
+I changed the default `input` to the same `input group` that is shown on the usage page of the library (see [here](https://tempusdominus.github.io/bootstrap-4/Usage/)). It appends a small calendar symbol to the input box which I find a nice touch. This could be encapsulated into a TagHelper to make it easier for developers.
 
 ```html
 <div class="form-group">
     <label asp-for="DateOfBirth"></label>
-    <input class="form-control datepicker" asp-for="DateOfBirth" autocomplete="off">
+    <div class="form-group">
+        <div class="input-group date" id="dateofbirth" data-target-input="nearest">
+            <input asp-for="DateOfBirth" name="DateOfBirth" type="text" class="form-control datetimepicker-input" data-target="#dateofbirth"/>
+            <div class="input-group-append" data-target="#dateofbirth" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+        </div>
+    </div>
 </div>
 ```
 
-## Configure bootstrap-datepicker
-We need to add a little piece of javscript to the page to add the functionality to the input field for the datepicker. We call the datepicker method on all items with the class `datepicker`. There are many options that you can pass in. Details about them can be found [here](https://bootstrap-datepicker.readthedocs.io/en/latest/options.html)
+## Configure the datepicker
+We need to add a little piece of javscript to the page to add the functionality to the input field for the datepicker. We call the datetimepicker method on all items with the class `date`. There are many options that you can pass in. Details about them can be found [here](https://tempusdominus.github.io/bootstrap-4/Options/).
 
 ```js
 $(function(){
-    $('.datepicker').datepicker({
-        orientation: 'bottom',
-        autoclose: true
+    $('.date').datetimepicker({
+        format: 'L'
     });
 });
 ```
-
-After this I thought I was done. But when ever I selected a Date from the datepicker I had the following error inside my browser console:
-
-```
-The specified value "02/13/2019" does not conform to the required format, "yyyy-MM-dd".
-```
-
-How to fix this?
-
-Well the ASP.NET Core `Input TagHelper` sets the type of the input field to `date` which then requires the format to be `yyyy-MM-dd`, which doesn't correspond with the datepicker. To fix this add the `type="text"` attribute to the input.
-
-```html
-<input class="form-control datepicker" asp-for="DateOfBirth" type="text" autocomplete="off">
-```
-
-So now it seems to be working.
 
 ## Add Localization
-If your app is localized and you also want to show the date in the regions date format we need to specify the current language to the options of the datepicker.
+If your app is localized and you also want to show the date in the regions date format we need to specify the current locale to the options of the datetimepicker.
 
 ```js
 $(function(){
-    $('.datepicker').datepicker({
-        orientation: 'bottom',
-        autoclose: true,
-        language: '@System.Threading.Thread.CurrentThread.CurrentUICulture.Name'
+    $('.date').datetimepicker({
+        locale: '@System.Threading.Thread.CurrentThread.CurrentUICulture.Name',
+        fromat: 'L'
     });
 });
 ```
 
-Since we are working with Razor Pages we can simply get the current threads ui culture and pass it to language property of the options object. But we also need to add the locales script provided by the datepicker library.
+Since we are working with Razor Pages we can simply get the current threads ui culture and pass it to the locale property of the options object.
 
-```html
-<script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
+After this I thought I was done but if I had the locale set to `de-CH` the client side validation failed if I selected a date like `28.02.2019`. This is because I am using the jQuery unobtrusive validation and this does not recognize validate datetime properly if they are in a non US format. But there is an easy fix for this, and since `moment.js` is already in place it is really simple. All that we have to do is update the `date` validation method.
+
+```js
+$.validator.methods.date = function (value, element) {
+    return this.optional(element) || moment(value, window.currentDateTimeFormat, true).isValid();
+}
+```
+
+I am setting a global JavaScript variable for the current date time format:
+
+```
+window.currentDateTimeFormat = '@System.Threading.Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern.ToUpper()';
+```
+
+Everything worked at this point, except the `Edit` page. If there was a datetime set and that value should be loaded into the input, there were strange exceptions in the browsers console.
+
+I figured out that the parsing method of the library was not working properly with simple strings as an input. So I used the option to override the `parseInputDate` function as shown below. 
+
+```js
+$(function(){
+    var parseInputDate = function (inputDate) {
+        var resultDate;
+        if (moment.isMoment(inputDate) || inputDate instanceof Date) {
+            resultDate = moment(inputDate);
+        } else {
+            resultDate = moment(inputDate, window.currentDateTimeFormat);
+        }
+        return resultDate;
+    }
+
+    $('.date').datetimepicker({
+        locale: '@System.Threading.Thread.CurrentThread.CurrentUICulture.Name',
+        fromat: 'L',
+        parseInputDate: parseInputDate
+    });
+});
 ```
 
 ## Custom model binder
