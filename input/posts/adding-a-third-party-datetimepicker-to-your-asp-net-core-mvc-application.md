@@ -1,6 +1,6 @@
 Title: Adding a third party datetime picker to your ASP.NET Core MVC Application
 Lead: 
-Published: 3/8/2019 12:45:00
+Published: 3/8/2019 12:00:00
 Tags:
     - ASP.NET Core 2.2
     - Bootstrap
