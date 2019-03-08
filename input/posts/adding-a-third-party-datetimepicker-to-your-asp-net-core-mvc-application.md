@@ -9,10 +9,10 @@ Tags:
     - UX
 ---
 
-In this blog post I want to show something that is trivial and yet always causes me headaches. DateTime pickers have always been a pain to implement, and there are so many ways to accomplish them. For my own reference and maybe for someone out there that is looking for a solution this is how I implement DateTime pickers using tempusdominus-bootstrap-4 including localization and some of its problems it brings.
+In this blog post I want to show something that is trivial and yet always causes me headaches. DateTime pickers have always been a pain to implement, and there are so many ways to accomplish them. For my own reference and maybe for someone out there that is looking for a solution this is how I implement DateTime pickers using [tempusdominus-bootstrap-4](https://tempusdominus.github.io/bootstrap-4/Usage/) including localization and some of its problems it brings.
 
 ## Installing the required package 
-We need to install the required packages. In most of my projects I use libman but you could also use npm or a cdn. The tempusdominus-bootstrap-4 package requires us to also include `moment.js` which is a very useful package if you are working with DateTime in JavaScript and you most likly already know it anyways.
+We need to install the required packages. In most of my projects I use `libman` to install client side packages, but you could also use `npm` or a `cdn`. The tempusdominus-bootstrap-4 package requires to also include `moment.js` which is a very useful package if you are working with dates in JavaScript.
 
 ```json 
 {
@@ -41,7 +41,7 @@ At the bottom of you `_Layout.cshtml`:
 ```
 
 ## Updating the HTML
-I changed the default `input` to the same `input group` that is shown on the usage page of the library (see [here](https://tempusdominus.github.io/bootstrap-4/Usage/)). It appends a small calendar symbol to the input box which I find a nice touch. This could be encapsulated into a TagHelper to make it easier for developers.
+I changed the default `input` to the same `input group` that is shown on the usage page of the library (see [here](https://tempusdominus.github.io/bootstrap-4/Usage/)). It appends a small calendar symbol to the input box which I find a nice touch. A next step could be, to encapsulated this into a `TagHelper` to make it easier for developers.
 
 ```html
 <div class="form-group">
@@ -58,7 +58,7 @@ I changed the default `input` to the same `input group` that is shown on the usa
 ```
 
 ## Configure the datepicker
-We need to add a little piece of javscript to the page to add the functionality to the input field for the datepicker. We call the datetimepicker method on all items with the class `date`. There are many options that you can pass in. Details about them can be found [here](https://tempusdominus.github.io/bootstrap-4/Options/).
+We need to add a little piece of javscript to the page to add the functionality to the input field for the datepicker. We call the `datetimepicker` method on all items with the class `date`. There are many options that you can pass as a parameter to the method. Details about them can be found [here](https://tempusdominus.github.io/bootstrap-4/Options/).
 
 ```js
 $(function(){
@@ -68,8 +68,8 @@ $(function(){
 });
 ```
 
-## Add Localization
-If your app is localized and you also want to show the date in the regions date format we need to specify the current locale to the options of the datetimepicker.
+## Adding Localization
+If your app requires localized dates and you want to show the date in the regions date format we need to specify the current locale to the options of the datetimepicker.
 
 ```js
 $(function(){
@@ -80,9 +80,9 @@ $(function(){
 });
 ```
 
-Since we are working with Razor Pages we can simply get the current threads ui culture and pass it to the locale property of the options object.
+Since I am working with Razor Pages we can simply get the current threads ui culture and pass it to the locale property of the options object.
 
-After this I thought I was done but if I had the locale set to `de-CH` the client side validation failed if I selected a date like `28.02.2019`. This is because I am using the jQuery unobtrusive validation and this does not recognize validate datetime properly if they are in a non US format. But there is an easy fix for this, and since `moment.js` is already in place it is really simple. All that we have to do is update the `date` validation method.
+After this I thought I was done but if I had the locale set to `de-CH` the client side validation failed if I selected a date like `28.02.2019`. This is because I am using the jQuery unobtrusive validation and it does not validate a datetime properly if they are in a non US format. But there is an easy fix to this, and since `moment.js` is already in place it is really simple. All that we have to do is update the `date` validation method.
 
 ```js
 $.validator.methods.date = function (value, element) {
@@ -98,7 +98,7 @@ window.currentDateTimeFormat = '@System.Threading.Thread.CurrentThread.CurrentUI
 
 Everything worked at this point, except the `Edit` page. If there was a datetime set and that value should be loaded into the input, there were strange exceptions in the browsers console.
 
-I figured out that the parsing method of the library was not working properly with simple strings as an input. So I used the option to override the `parseInputDate` function as shown below. 
+I figured out that the parsing method of the library was not working properly. I used the option to override the `parseInputDate` function as shown below. 
 
 ```js
 $(function(){
@@ -121,7 +121,7 @@ $(function(){
 ```
 
 ## Custom model binder
-If you are using the regions date format inside with a query string parameter strange things might happen. For example if you choose the `01.02.2019` the model binding binds using the format month day year, and the result ist `02.01.2019` which is wrong. It gets even better. If you choose `28.02.2019` it silently fails and sets the value to null (if you have a nullable DateTime type).
+If you are using the regions date format as a query string parameter strange things might happen. For example if you choose the `01.02.2019` the model binding binds using the format `month day year`, and the result is `02.01.2019` on the server which is wrong. It gets even better. If you choose `28.02.2019` it silently fails and sets the value to null (if you have a nullable DateTime type). To fix this issue I created a custom implementation of a `DateTimeModelBinder`.
 
 ```csharp
 public class DateTimeModelBinder : IModelBinder 
