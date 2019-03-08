@@ -75,7 +75,7 @@ If your app requires localized dates and you want to show the date in the region
 $(function(){
     $('.date').datetimepicker({
         locale: '@System.Threading.Thread.CurrentThread.CurrentUICulture.Name',
-        fromat: 'L'
+        format: 'L'
     });
 });
 ```
@@ -114,7 +114,7 @@ $(function(){
 
     $('.date').datetimepicker({
         locale: '@System.Threading.Thread.CurrentThread.CurrentUICulture.Name',
-        fromat: 'L',
+        format: 'L',
         parseInputDate: parseInputDate
     });
 });
