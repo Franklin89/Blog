@@ -10,7 +10,7 @@ Tags:
 
 In this blog post I want to show how I integrated [Stripe](https://stripe.com), a very popular and well known payment gateway, into an ASP.NET Core MVC Application. The application that I have built offers three subscription plans: Basic, Professional and Enterprise. Depending on the subscription plan selected at sign up, the user will get billed automatically every month, as long as they have an active account. This is the first part that will show how I setup Stripe and how to interact with the API.
 
-- Part 1: Setup - This blog post
+- Part 1: Setup and Configuration - This blog post
 - Part 2: Subscribe to a subscription - Work in progress
 - Part 3: Stripe WebHooks - Work in progress
 
@@ -20,7 +20,7 @@ Stripe is very popular not only because of their well documented APIs, simple an
 
 > We have to watch out here: we are working with very sensitive data (Credit card numbers and other personal information), to be allowed to receive and store that data on my server, I would need to be [PCI Compliant](https://en.wikipedia.org/wiki/Payment_Card_Industry_Data_Security_Standard). But this is not an easy task for small companies or a single person. Most payment gateways offer a solution for this: As an application developer you display the order details to the customer and if they agree to purchase, they get redirected to a page hosted by the payment gateway. After the purchase is complete the customer gets redirected back.
 
-Stripe offers multiple ways on handling this. The one I will take a look at is using their JavaScript API. By using this API we can send the credit card information directly to the Stripe's servers. With this in place we will not need to be PCI Compliant.
+Stripe offers multiple ways on handling credit card and user information. The one I will take a look at is using their JavaScript API. By using this API we can send the credit card information directly to the Stripe's servers, and we will only receive a token. That we can then use in our backend to make the purchase. With this in place we will not need to be PCI Compliant because we are only working with that special token from Stripe.
 
 ## Setup Stripe
 
@@ -56,14 +56,14 @@ The Stripe API requires two API Keys to be added to our configuration. Stripe of
 Then we need to configure Stipe.net to use the secret key in our `Startup.cs`
 
 ```csharp
-StripeConfiguration.SetApiKey(configuration["Stripe:ApiKey"]);
+StripeConfiguration.SetApiKey(configuration["Stripe:SecretKey"]);
 ```
 
 Now we are able to call into our stripe account with the help of Stripe.net.
 
 ## Setting up Products and Pricing Plans
 
-Stipe offers a test environment where all data can be cleared with the push of a single button. Which is great during development and testing scenarios. But setting up the products and pricing plans after clearing the data is a pain. To overcome this pain I implemented a startup task (what I mean by a startup task is explained [here by Andrew Lock](https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/)) that reads a JSON file that contains the products and pricing plans, and creates these objects in my Stripe account.
+As mentioned earlier Stripe offers a test environment, where all data can be cleared with the push of a single button. Which is great during development and testing scenarios. But setting up the products and pricing plans after clearing the data is a pain. To overcome this pain I implemented a startup task (what I mean by a startup task is explained [here by Andrew Lock](https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/)) that reads a JSON file that contains the products and pricing plans, and creates these objects in my Stripe account.
 
 ```json
 {
@@ -163,4 +163,6 @@ Now we have everything in place, when we delete the test data in the Stripe Dash
 
 This has been part 1 of my mini series about integrating Stripe with ASP.NET Core. We can now automatically setup Stripe products and service plans as required for our application.
 
-In the next part I will show how to actually subscribe a user (or in my case a Tenant) to a subscription and all the required parts. If there is anything someone is interested in seeing in this context let me know and I will see if I can integrate it in one of the future parts.
+In the next part I will show how to actually subscribe a user (or in my case a Tenant) to a subscription and especially show how to handle credit cards that will be used for the automatic payment of the subscription fee. If there is anything someone is interested in seeing in this context let me know and I will see if I can integrate it in one of the future parts.
+
+If you like this blog post drop a comment or buy me a coffee at the bottom of the page <i class="fa fa-coffee"></i>
