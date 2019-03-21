@@ -1,6 +1,6 @@
 Title: Stripe API with ASP.NET Core - Part 1 Setup and Configuration
 Lead: Integrating Stripe with ASP.NET Core to provide secure invoicing and subscription processing
-Published: 3/21/2019 17:00
+Published: 3/21/2019 16:15
 Tags:
     - ASP.NET Core 2.2
     - Stripe
