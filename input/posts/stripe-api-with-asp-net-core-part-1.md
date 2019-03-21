@@ -1,6 +1,6 @@
 Title: Stripe API with ASP.NET Core - Part 1 Setup and Configuration
 Lead: Integrating Stripe with ASP.NET Core to provide secure invoicing and subscription processing
-Published: 3/20/2019 11:00
+Published: 3/21/2019 16:15
 Tags:
     - ASP.NET Core 2.2
     - Stripe
@@ -11,8 +11,8 @@ Tags:
 In this blog post I want to show how I integrated [Stripe](https://stripe.com), a very popular and well known payment gateway, into an ASP.NET Core MVC Application. The application that I have built offers three subscription plans: Basic, Professional and Enterprise. Depending on the subscription plan selected at sign up, the user will get billed automatically every month, as long as they have an active account. This is the first part that will show how I setup Stripe and how to interact with the API.
 
 - Part 1: Setup and Configuration - This blog post
-- Part 2: Subscribe to a subscription - Work in progress
-- Part 3: Stripe WebHooks - Work in progress
+- Part 2: Subscription handling - Work in progress
+- Part 3: WebHooks - Work in progress
 
 ## Stripe
 
@@ -20,7 +20,7 @@ Stripe is very popular not only because of their well documented APIs, simple an
 
 > We have to watch out here: we are working with very sensitive data (Credit card numbers and other personal information), to be allowed to receive and store that data on my server, I would need to be [PCI Compliant](https://en.wikipedia.org/wiki/Payment_Card_Industry_Data_Security_Standard). But this is not an easy task for small companies or a single person. Most payment gateways offer a solution for this: As an application developer you display the order details to the customer and if they agree to purchase, they get redirected to a page hosted by the payment gateway. After the purchase is complete the customer gets redirected back.
 
-Stripe offers multiple ways on handling credit card and user information. The one I will take a look at is using their JavaScript API. By using this API we can send the credit card information directly to the Stripe's servers, and we will only receive a token. That we can then use in our backend to make the purchase. With this in place we will not need to be PCI Compliant because we are only working with that special token from Stripe.
+Stripe offers multiple ways on handling credit card and user information. The one I will take a look at is using their JavaScript API. By using this API we can send the credit card information directly to the Stripe's servers, and we will only receive a token. That we can then use in our backend to make the purchase. With this in place we will not need to be PCI Compliant because we are only working with that special token provided by Stripe.
 
 ## Setup Stripe
 
