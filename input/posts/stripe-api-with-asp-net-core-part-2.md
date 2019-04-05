@@ -10,7 +10,7 @@ Tags:
 
 In the first post I showed how to set up a ASP.NET Core 2.2 Application to connect to the Stripe API using Stripe.NET. At the end of the first post I had everything set up so that Products and Pricing Plans are automatically created at application startup if they do not already exist. If you have not read that post you can find it [here](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1).
 
-In this post I will focus on how to create a new customer in the application database and also add it to Stripe. The SaaS platform we created does not require a credit card at sign up because the pricing plans offer a free trail for a predefined amount of days. The tenant signs up, tests the application and before the trail ends they will need to enter their credit card / payment details so that the subscription continues.
+In this post I will focus on how to create a new customer in the application database and also add it to Stripe. The SaaS platform we created does not require a credit card at sign up because the pricing plans offer a free trial for a predefined amount of days. The tenant signs up, tests the application and before the trial ends they will need to enter their credit card / payment details so that the subscription continues.
 
 - [Part 1: Setup and Configuration](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1)
 - **Part 2: Subscription handling - This Blog Post**
@@ -263,6 +263,6 @@ If we now go back to the Stripe dashboard we should see the card that we just ad
 
 That's it for this post. I tried to show how we use Stripe to handle subscriptions and securely store credit card information outside of our application. Now that we have created a customer with a valid subscription and credit card attached to it he will get automatically billed at the beginning of each new subscription month. Of course there is a lot more to implement like cancelling a subscription, changing plans or updating the payment details. Also don't forget that we need to implement some logic in the application to check if the user that is trying to login still has a valid subscription. But all of these features can be implemented in a similar fashion. Again the documentation is really good for the Stripe API and also the Stripe.NET library follows its concepts throughout all the public calls.
 
-In my next part I will look into the WebHooks capability of Stripe. With this we can inform users a few days before their trail ends that they have to enter their payment details or about payments that failed.
+In my next part I will look into the WebHooks capability of Stripe. With this we can inform users a few days before their trial ends that they have to enter their payment details or about payments that failed.
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page <i class="fa fa-coffee"></i>
