@@ -14,7 +14,7 @@ In this post I will focus on how to create a new customer in the application dat
 
 - [Part 1: Setup and Configuration](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1)
 - **Part 2: Subscription handling - This Blog Post**
-- Part 3: WebHooks - Work in progress
+- Part 3: WebHooks
 
 ## Creating a new Stripe Customer
 

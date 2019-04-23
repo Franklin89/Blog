@@ -10,9 +10,9 @@ Tags:
 
 In this blog post I want to show how I integrated [Stripe](https://stripe.com), a very popular and well known payment gateway, into an ASP.NET Core MVC Application. The application that I have built offers three subscription plans: Basic, Professional and Enterprise. Depending on the subscription plan selected at sign up, the user will get billed automatically every month, as long as they have an active account. This is the first part that will show how I setup Stripe and how to interact with the API.
 
-- Part 1: Setup and Configuration - This blog post
-- Part 2: Subscription handling - Work in progress
-- Part 3: WebHooks - Work in progress
+- **Part 1: Setup and Configuration - This blog post**
+- [Part 2: Subscription handling](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1)
+- Part 3: WebHooks
 
 ## Stripe
 
