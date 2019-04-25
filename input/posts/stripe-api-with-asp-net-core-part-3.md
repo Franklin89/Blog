@@ -1,7 +1,7 @@
 Title: Stripe API with ASP.NET Core - Part 3 WebHooks
 Lead: Integrating Stripe with ASP.NET Core to provide secure invoicing and subscription processing
-Published: 4/23/2019 12:00
-Tags:
+Published: 4/25/2019 18:00
+Tags: 
     - ASP.NET Core 2.2
     - Stripe
     - Stripe.net
@@ -25,29 +25,112 @@ Stripe offers a series of WebHooks that enables an application developer to reac
 
 Under the _developer settings_ there is a submenu called _Events_. This is where the WebHooks are configured. You can specify which events you want to be sent and the endpoint that they will be sent to.
 
-> TODO: Add some screenshots
+![image](/posts/images/StripeWebHookSetup.png)
 
 ## Testing WebHooks & Architecture decisions
 
 As described in the previous posts, Stripe offers a test environment. This test environment also offers the full support for the WebHooks. On top of that they offer sending test requests on demand. This is great while developing the application.
 
-> TODO: Screenshots from the test console
+![image](/posts/images/StripeSendTestWebHook.png)
 
 But there is one problem to be solved. While debugging on your local machine, the application is not accessible through a URL. There are different solutions to this problem. You could use a tool like `nGronk` that will offer a public URL that then can be used as an endpoint. Other drawbacks to allowing Stripe sending requests directly to the application is that there needs to be some sort of security mechanism in place so that the endpoint is not open to the public, add throttling etc. All these points made me think. What other solutions does Azure offer. Then something that I wanted to try since a long time but never saw a use case in came to my mind: Azure Functions.
 
 Azure Functions offer security through function keys, they offer a high SLA and through deployment slots we could also leverage different endpoints for the two different environments in Stripe. The Azure function receives the POST request and parses the JSON Body and adds a message to a Service Bus Queue. With the Queue in place it is possible to register any application desired to listen for a new message and handle it appropriately. This might be a bit over engineered, but in my opinion it offers a secure and simple way of handling the WebHooks.
 
-> TODO: Use Azure Service Icons
+![image](/posts/images/StripeWebHookArchitecture.png)
 
 ## Receiving request from Stripe
 
-> TODO: HTTP Triggered Azure function
+As explained above I am receiving the request in a HttpTriggered function. In the constructor I also connect to my service bus. By setting the Queue parameter to `%QueueName%` I can set that inside of the application settings.
+
+```csharp
+[FunctionName("StripeWebHook")]
+public static async Task<IActionResult> Run(
+    [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+    [ServiceBus("%QueueName%", Connection = "AzureWebJobsServiceBus", EntityType = EntityType.Queue)] ICollector<Message> messages,
+    ILogger log)
+{
+```
+
+With this in place I can deploy the function to different deployment slots and publish the message to a different queue.
+
+The logic of the function is straight forward. There is something that is special about handling the content of the request. Normally I would use `JsonConvert.DeserializeObject` to deserialize the Json content. But Stripe offers a security feature that allows a developer to check a signature against a secret. With this in place a developer can verify that events were sent by Stripe and not by anyone else. More about this in the [docs](https://stripe.com/docs/webhooks/signatures). The Stripe.NET library that I already used in my previous posts offers a simple method to check the signature.
+
+```csharp
+try
+{
+    var secret = Environment.GetEnvironmentVariable("StripeSecret");
+    string json = await new StreamReader(req.Body).ReadToEndAsync();
+
+    var @event = EventUtility.ConstructEvent(json, req.Headers["Stripe-Signature"], secret);
+    if (@event == null)
+    {
+        log.LogError("Unable to construct the event from the body that was sent");
+        return new BadRequestObjectResult("Invalid content");
+    }
+
+    log.LogInformation($"Processing: {@event.Type}");
+    messages.Add(ProcessEvent(@event));
+
+    return new OkResult();
+}
+catch (StripeException e)
+{
+    log.LogError(e.Message);
+    return new BadRequestResult();
+}
+```
+
+Inside of the `ProcessEvent` method I do nothing more than constructing my custom payload with only the required properties for my SaaS application. The Stripe events are very detailed and have a lot of information in them.
+
+```csharp
+private static Message ProcessEvent(Event @event)
+{
+    if (@event.Type == Events.CustomerSubscriptionTrialWillEnd)
+    {
+        var subscription = Mapper<Subscription>.MapFromJson(@event.Data.ToJson(), "object");
+        return new Message
+        {
+            Label = "StripeTrailEndEvent",
+            Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
+            {
+                Type = @event.Type,
+                LiveMode = @event.Livemode,
+                CustomerId = subscription.CustomerId,
+                TrialEnd = subscription.TrialEnd
+            }))
+        };
+    }
+    else
+    {
+        throw new UnhandledEventTypeException($"Unhandled event type: {@event.Type}");
+    }
+}
+```
+
+The message that will be pushed into the queue will be small and only contain the data that will be required by the SaaS application. That is all the magic for receiving a Stripe event through a WebHook and pushing a message into a queue to process it further.
 
 ## Handling new messages
 
-> TODO: Short code snippets
+Inside of the SaaS application I will handle any new messages that get published to the Service Bus Queue. I will implement an event handler for all the various events that I want to handle and register them at startup.
 
-If you want more information about how to get started with Service Bus Queues, checkout the following [blog post by Damien Bowden](https://damienbod.com/2019/04/23/using-azure-service-bus-queues-with-asp-net-core-services/). At the moment of writing this blog post he is composing a series of interesting posts about different aspects of the Azure Service Bus.
+>If you want more information about how to get started with Service Bus Queues, checkout the following [blog post by Damien Bowden](https://damienbod.com/2019/04/23/using-azure-service-bus-queues-with-asp-net-core-services/). At the moment of writing this blog post he is composing a series of interesting posts about different aspects of the Azure Service Bus.
+
+```csharp
+public async Task Handle(StripeTrialEndEvent @event)
+{
+    var tenant = await _dbContext.Tenants.SingleOrDefaultAsync(x => x.StripeCustomerId == @event.CustomerId);
+
+    if(tenant != null)
+    {
+        _emailSender.SendTrialEndEmail(tenant.Email, @event.TrialEnd);
+    }
+    else
+    {
+        _logger.LogError($"Unable to find a tenant with the following Stripe CustomerId: {@event.CustomerId}");
+    }
+}
+```
 
 ## Summary
 
