@@ -12,7 +12,7 @@ In this blog post I want to show how I integrated [Stripe](https://stripe.com), 
 
 - **Part 1: Setup and Configuration - This blog post**
 - [Part 2: Subscription handling](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1)
-- Part 3: WebHooks
+- [Part 3: WebHooks](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-3)
 
 ## Stripe
 

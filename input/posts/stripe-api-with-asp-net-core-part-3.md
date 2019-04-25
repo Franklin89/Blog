@@ -17,15 +17,42 @@ In this post I will focus on how to integrate events that are published by Strip
 - [Part 2: Subscription handling](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-2)
 - **Part 3: WebHooks - This Blog Post**
 
-## TODO LIST
-1. Write Intro
-1. Describe architecture
-1. Azure Functions => To make it easier to develop without the need of nGronk or other tools
-1. Service Bus => Ref to Damiens Blog Post 
-1.
+## Stripe WebHooks
+
+Stripe offers a series of WebHooks that enables an application developer to react to events that occur on their Stripe account. This is model is getting more and more popular in the asynchronous world that we are. A developer shall no long be programming recurring tasks for checking if a payment has succeeded or failed. Stripe will raise an event and send the data through the WebHook to the application.
+
+## Setting up the WebHooks on the dashboard
+
+Under the _developer settings_ there is a submenu called _Events_. This is where the WebHooks are configured. You can specify which events you want to be sent and the endpoint that they will be sent to.
+
+> TODO: Add some screenshots
+
+## Testing WebHooks & Architecture decisions
+
+As described in the previous posts, Stripe offers a test environment. This test environment also offers the full support for the WebHooks. On top of that they offer sending test requests on demand. This is great while developing the application.
+
+> TODO: Screenshots from the test console
+
+But there is one problem to be solved. While debugging on your local machine, the application is not accessible through a URL. There are different solutions to this problem. You could use a tool like `nGronk` that will offer a public URL that then can be used as an endpoint. Other drawbacks to allowing Stripe sending requests directly to the application is that there needs to be some sort of security mechanism in place so that the endpoint is not open to the public, add throttling etc. All these points made me think. What other solutions does Azure offer. Then something that I wanted to try since a long time but never saw a use case in came to my mind: Azure Functions.
+
+Azure Functions offer security through function keys, they offer a high SLA and through deployment slots we could also leverage different endpoints for the two different environments in Stripe. The Azure function receives the POST request and parses the JSON Body and adds a message to a Service Bus Queue. With the Queue in place it is possible to register any application desired to listen for a new message and handle it appropriately. This might be a bit over engineered, but in my opinion it offers a secure and simple way of handling the WebHooks.
+
+> TODO: Use Azure Service Icons
+
+## Receiving request from Stripe
+
+> TODO: HTTP Triggered Azure function
+
+## Handling new messages
+
+> TODO: Short code snippets
+
+If you want more information about how to get started with Service Bus Queues, checkout the following [blog post by Damien Bowden](https://damienbod.com/2019/04/23/using-azure-service-bus-queues-with-asp-net-core-services/). At the moment of writing this blog post he is composing a series of interesting posts about different aspects of the Azure Service Bus.
 
 ## Summary
 
-TODO: Write Summary
+In this blog post I tried to show one way to handle Stripe WebHooks and how they can be tested also locally while debugging without the need of `nGronk`. In the way I showed in this blog post an Azure Function and Service Bus Queue is required. Someone might think that this is over engineered but in my opinion since I am hosting all the production code on Azure this is a great way to also learn about other products of Azure.
+
+That was the last part of this mini-series about integrating Stripe with ASP.NET Core to provide secure invoicing and subscription processing. There will be more on this in the future, but for now I have all the features required to handle subscriptions for my SaaS application.s
 
 If you like this blog post drop a comment or buy me a coffee at the bottom of the page <i class="fa fa-coffee"></i>
