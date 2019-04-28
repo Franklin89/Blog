@@ -1,6 +1,6 @@
 Title: Stripe API with ASP.NET Core - Part 3 WebHooks
 Lead: Integrating Stripe with ASP.NET Core to provide secure invoicing and subscription processing
-Published: 4/28/2019 08:00
+Published: 4/28/2019 07:11
 Tags: 
     - ASP.NET Core 2.2
     - Stripe
