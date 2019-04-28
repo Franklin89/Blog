@@ -8,7 +8,7 @@ Tags:
     - Payment
 ---
 
-In the first post I showed how to set up a ASP.NET Core 2.2 Application to connect to the Stripe API using Stripe.NET. At the end of the first post I had everything set up so that Products and Pricing Plans are automatically created at application startup if they do not already exist. If you have not read that post you can find it [here](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1).
+In the first post I showed how to set up an ASP.NET Core 2.2 Application to connect to the Stripe API using Stripe.NET. At the end of the first post I had everything set up so that Products and Pricing Plans are automatically created at application startup if they do not already exist. If you have not read that post you can find it [here](https://ml-software.ch/posts/stripe-api-with-asp-net-core-part-1).
 
 In this post I will focus on how to create a new customer in the application database and also add it to Stripe. The SaaS platform we created does not require a credit card at sign up because the pricing plans offer a free trial for a predefined amount of days. The tenant signs up, tests the application and before the trial ends they will need to enter their credit card / payment details so that the subscription continues.
 
