@@ -5,3 +5,4 @@ steps:
   - script: build -target BuildServer
     env:
       NETLIFY_TOKEN: $(NETLIFY_TOKEN)
+      NETLIFY_SITE_ID: $(NETLIFY_SITE_ID)

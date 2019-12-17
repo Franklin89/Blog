@@ -43,6 +43,7 @@ Task("Deploy")
     .Does(() =>
     {
         var netlifyToken = EnvironmentVariable("NETLIFY_TOKEN");
+        var siteId = EnvironmentVariable("NETLIFY_SITE_ID");
         if(string.IsNullOrEmpty(netlifyToken))
         {
             throw new Exception("Could not get Netlify token environment variable");
@@ -50,7 +51,7 @@ Task("Deploy")
 
         Information("Deploying output to Netlify");
         var client = new NetlifyClient(netlifyToken);
-        client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, "matteo.netlify.com").Wait();
+        client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, siteId).Wait();
     });
 
 //////////////////////////////////////////////////////////////////////
