@@ -40,7 +40,7 @@ Task("Preview")
     });
 
 Task("Deploy")
-    .Does(() =>
+    .Does(async () =>
     {
         var netlifyToken = EnvironmentVariable("NETLIFY_TOKEN");
         if(string.IsNullOrEmpty(netlifyToken))
@@ -56,7 +56,7 @@ Task("Deploy")
 
         Information("Deploying output to Netlify");
         var client = new NetlifyClient(netlifyToken);
-        client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, siteId).Wait();
+        await client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, siteId);
     });
 
 //////////////////////////////////////////////////////////////////////
