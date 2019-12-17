@@ -59,7 +59,7 @@ If we now add this component to one of our Razor Pages we expect the `<h3>` to b
 }
 ```
 
-And so it is. You
+And so it is.
 
 ![image](/posts/images/RazorComponentsOutput.PNG)
 
