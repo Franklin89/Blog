@@ -4,6 +4,7 @@
 
 
 using NetlifySharp;
+using System.Net.Http;
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -55,8 +56,8 @@ Task("Deploy")
         }
 
         Information("Deploying output to Netlify");
-        var client = new NetlifyClient(netlifyToken);
-        await client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, siteId);
+        var client = new NetlifyClient(netlifyToken, new HttpClient());
+        var site =await client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, siteId);
     });
 
 //////////////////////////////////////////////////////////////////////
