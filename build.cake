@@ -43,10 +43,15 @@ Task("Deploy")
     .Does(() =>
     {
         var netlifyToken = EnvironmentVariable("NETLIFY_TOKEN");
-        var siteId = EnvironmentVariable("NETLIFY_SITE_ID");
         if(string.IsNullOrEmpty(netlifyToken))
         {
             throw new Exception("Could not get Netlify token environment variable");
+        }
+
+        var siteId = EnvironmentVariable("NETLIFY_SITE_ID");
+        if(string.IsNullOrEmpty(siteId))
+        {
+            throw new Exception("Could not get Netlify Site Id environment variable");
         }
 
         Information("Deploying output to Netlify");
