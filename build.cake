@@ -1,6 +1,7 @@
-#tool "nuget:https://api.nuget.org/v3/index.json?package=Wyam&version=2.0.0"
-#addin "nuget:https://api.nuget.org/v3/index.json?package=Cake.Wyam&version=2.0.0"
-#addin "NetlifySharp"
+#tool "nuget:https://api.nuget.org/v3/index.json?package=Wyam&version=2.2.9"
+#addin "nuget:https://api.nuget.org/v3/index.json?package=Cake.Wyam&version=2.2.9"
+#addin "nuget:https://api.nuget.org/v3/index.json?package=NetlifySharp&version=1.1.0"
+
 
 using NetlifySharp;
 
@@ -49,7 +50,7 @@ Task("Deploy")
 
         Information("Deploying output to Netlify");
         var client = new NetlifyClient(netlifyToken);
-        client.UpdateSite($"matteo.netlify.com", MakeAbsolute(Directory("./output")).FullPath).SendAsync().Wait();
+        client.UpdateSiteAsync(MakeAbsolute(Directory("./output")).FullPath, "matteo.netlify.com").Wait();
     });
 
 //////////////////////////////////////////////////////////////////////
