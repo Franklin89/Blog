@@ -1,4 +1,4 @@
-Title: Using Vue.js as a drop in component in you Razor Pages
+Title: Using Vue.js as a drop in component in your Razor Pages
 Published: 01/20/2020 15:00
 Tags: 
     - ASP.NET Core 3.1
