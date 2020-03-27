@@ -158,6 +158,18 @@ v1.0 branch now tracks v1.0 stabilization and release.
 master branch now tracks v1.1-preview development.
 ```
 
+## Using the version when creating a NuGet
+
+If you are creating a NuGet package as part of your build you can use one of the build variables and pass it in to the pack command.
+
+```
+- powershell: |
+    mkdir $(Build.ArtifactStagingDirectory)\Packages
+    $version = .\nbgv.exe get-version -f json | ConvertFrom-Json
+    dotnet pack --no-build /p:NuspecProperties="version=$($version.NuGetPackageVersion);RepositoryType=git;RepositoryCommit=$($version.GitCommitId);"
+  displayName: Create packages
+```
+
 ## Summary
 
 To sum it up there is not much more to say then `Versioning just got a little bit simpler`. Of course you still have to make sure that your customers know what each version bump means and also the developers have to know what a breaking change is so that they can increase the major version for example. If you need more information or more details either go to the [repository and go through the documentation](https://github.com/dotnet/Nerdbank.GitVersioning) or drop me a comment below.
