@@ -30,6 +30,7 @@
         <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
         <link href="@Context.GetLink("/assets/css/override.css")" rel="stylesheet" />
+        <link href="@Context.GetLink("/assets/css/custom.css")" rel="stylesheet" />
 
 
         <meta name="application-name" content="@Context.String(BlogKeys.Title)" />
@@ -137,7 +138,10 @@
                 <!-- Footer -->
                 <footer>
                         @Html.Partial("_Footer")
-                </footer> 
+                </footer>
+
+                <!-- Buy me coffe widget -->
+                @Html.Partial("_BuyMeCoffee")
 
                 @Html.Partial("_Scripts")
                 <script>hljs.initHighlightingOnLoad();</script>

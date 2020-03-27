@@ -8,3 +8,6 @@ nuget.exe
 /*.packages.xml
 /*.wyam.hash
 /*.wyam.dll
+.store/*
+nbgv.exe
+wyam.exe
