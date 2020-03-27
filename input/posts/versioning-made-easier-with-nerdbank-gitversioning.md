@@ -1,5 +1,5 @@
 Title: Versioning made easier with Nerdbank.GitVersioning
-Published: 03/27/2020 08:30
+Published: 03/27/2020 17:00
 Tags: 
     - ASP.NET Core
     - Azure DevOps
