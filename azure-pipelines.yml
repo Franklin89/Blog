@@ -36,7 +36,7 @@ stages:
           - task: PowerShell@2
             displayName: Deploy To Production
             inputs:
-              filePath: 'build.ps1'
+              filePath: '.\build.ps1'
               arguments: '-target Deploy'
             env:
               NETLIFY_TOKEN: $(NETLIFY_TOKEN)
