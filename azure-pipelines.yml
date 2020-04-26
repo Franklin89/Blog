@@ -33,8 +33,12 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: .\build.ps1 -target Deploy
+          - task: PowerShell@2
             displayName: Deploy To Production
+            inputs:
+              filePath: 'build.ps1'
+              arguments: '-target Deploy'
             env:
               NETLIFY_TOKEN: $(NETLIFY_TOKEN)
               NETLIFY_SITE_ID: $(NETLIFY_SITE_ID)
+              
