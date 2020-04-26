@@ -23,12 +23,12 @@ stages:
 
 - stage: Deploy
   displayName: Deploy
-  environment: Production
   dependsOn: Build
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) # this will only run on master
   jobs:
   - deployment: Deploy
     displayName: Deploy
+    environment: Production
     strategy:
       runOnce:
         deploy:
