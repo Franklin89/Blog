@@ -13,7 +13,7 @@ There is no limit set for what a bot can be used in today’s world. We see them
 
 ![image](/posts/images/botfather.jpg)
  
-Before you can communicate with the Telegram API and test your bot you need to register your bot obtain an Access Token from the @Botfather. Telegrams Botfather himself is a bot that helps you manage your bots and allows you to generate an access token. Make sure that the access token is kept as a secret. More on how to register your bot is described [here]( https://core.telegram.org/bots#6-botfather).
+Before you can communicate with the Telegram API and test your bot, you need to register your bot and obtain an Access Token from the @Botfather. Telegrams Botfather himself is a bot that helps you manage your bots and allows you to generate an access token. Make sure that the access token is kept as a secret. More on how to register your bot is described [here]( https://core.telegram.org/bots#6-botfather).
 
 ## How do bots work?
 
