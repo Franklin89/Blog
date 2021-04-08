@@ -1,5 +1,5 @@
 Title: Running Seq on Azure
-Published: 04/08/2021 14:00
+Published: 04/08/2021 13:00
 Tags: 
     - Azure
     - Docker
