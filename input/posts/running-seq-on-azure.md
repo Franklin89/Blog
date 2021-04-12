@@ -13,25 +13,25 @@ In this blog post I would like to share a quick how to on how you can run a Seq 
 
 First we need to create a new App Service Web App. Make sure to choose `Publish` -> `Container` and the `Operating System` should be `Linux`. You can set the `Sku and size` to what ever you require.
 
-![image](/posts/images/portal-appservice-docker-1.PNG)
+<img src="/posts/images/portal-appservice-docker-1.PNG" width="500" />
 
 ## Step 2
 
 On the next step we need to configure the `Image Source` and `Image and tag` that we would like to run. You can specify an explicit version or just use the `latest` tag.
 
-![image](/posts/images/portal-appservice-docker-2.PNG)
+<img src="/posts/images/portal-appservice-docker-2.PNG" width="600" />
 
 ## Step 3
 
 Since we are not running our software but rather a third party application we do not need to `Enable Application Insights`.
 
-![image](/posts/images/portal-appservice-docker-3.PNG)
+<img src="/posts/images/portal-appservice-docker-3.PNG" width="600" />
 
 ## Step 4
 
 Nothing to be done here.
 
-![image](/posts/images/portal-appservice-docker-4.PNG)
+<img src="/posts/images/portal-appservice-docker-4.PNG" width="600" />
 
 ## Step 5
 
@@ -39,7 +39,7 @@ After the Web App has been created you will not be able to access it yet. We nee
 - `ACCEPT_EULA` => `Y` 
 - `WEBSITES_PORT` => `80:5341`.
 
-![image](/posts/images/portal-appservice-docker-configuration.PNG)
+<img src="/posts/images/portal-appservice-docker-configuration.PNG" width="900" />
 
 Now restart the Web App and you should be able to access it.
 
@@ -47,7 +47,7 @@ Now restart the Web App and you should be able to access it.
 
 If you have your application configured correctly you should see log messages arriving. But the data is only being stored inside of the container. We need to mount some storage. From the `Configuration` blade choose `Path mappings` and configure a new azure storage mount. You might have to configure this first in your storage account. Make sure to choose `Azure Files` and not `Azure Blob`.
 
-![image](/posts/images/portal-appservice-docker-pathmappings.PNG)
+<img src="/posts/images/portal-appservice-docker-pathmappings.PNG" width="800" />
 
 This is all the magic there is to running Seq on Azure. Now you can configure your Seq instance the way you want, with keys and metrics dashboards.
 
