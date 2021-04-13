@@ -1,5 +1,5 @@
 Title: Verifying Verifiable Credentials in ASP.NET Core for Decentralized Identities using Trinsic
-Published: 04/12/2021 13:00
+Published: 04/13/2021 12:00
 Tags: 
     - ASP.NET Core
     - Blockchain
@@ -9,6 +9,8 @@ Tags:
 ---
 
 This blog post is a continuation of [Damien's blog post](https://damienbod.com/2021/04/05/creating-verifiable-credentials-in-asp-net-core-for-decentralized-identities-using-trinsic/) about the creation of verifiable credentials. In his blog post Damien showed how to set up an ASP.NET Core application to obtain a credential from the Trinsic platform. In this part we are going to look at how we can verify these credentials in order to continue some sort of business process. We will continue with the sample that Damien started and after obtaining our driver license we want to sign up for a new insurance. But we can only sign up at this insurance company if we can deliver proof of our driver license.
+
+The code for this can be found on [GitHub](https://github.com/swiss-ssi-group/TrinsicAspNetCore).
 
 ## Setup
 
