@@ -1,5 +1,5 @@
 Title: Verifying Verifiable Credentials in ASP.NET Core for Decentralized Identities using Trinsic
-Published: 04/11/2021 13:00
+Published: 04/12/2021 13:00
 Tags: 
     - ASP.NET Core
     - Blockchain
@@ -8,23 +8,23 @@ Tags:
     - Security
 ---
 
-This blog post is a continuation of [Damien's](https://damienbod.com/2021/04/05/creating-verifiable-credentials-in-asp-net-core-for-decentralized-identities-using-trinsic/) blog post about the creation of verifiable credentials. In his blog post Damien showed how to set up an ASP.NET Core application to obtain a credential from the Trinsic platform. In this part we are going to look at how we can Verify these credentials in order to continue some sort of business process. We will continue with the sample that Damien started and after obtaining our driver license we want to buy an insurance. The insurance company wants us to verify that we have obtained proper credentials.
+This blog post is a continuation of [Damien's blog post](https://damienbod.com/2021/04/05/creating-verifiable-credentials-in-asp-net-core-for-decentralized-identities-using-trinsic/) about the creation of verifiable credentials. In his blog post Damien showed how to set up an ASP.NET Core application to obtain a credential from the Trinsic platform. In this part we are going to look at how we can verify these credentials in order to continue some sort of business process. We will continue with the sample that Damien started and after obtaining our driver license we want to sign up for a new insurance. But we can only sign up at this insurance company if we can deliver proof of our driver license.
 
 ## Setup
 
-Whilst in Damien's blog post he showed how a verifiable credential can be issued to a so called credential holder, this blog post will be about how we can verify such credentials as part of a business workflow. After an issuer has issued credentials to the holder and they have stored these into their wallet, a verifier can now ask a holder to verify them self with a certain credential. A verifier can add policies to check for certain attributes but also add restrictions like a specific issuer DID. With this in place a verifier can create a verification request which will be sent to the credential holder. This step is very important because it is where a cryptographic challenge is generated that the holder must respond to. This guarantees that the holder is responding to exactly this specific verification request. After the verification request gets returned to the verifier, it need to be verified against the ledger to make sure it is valid. The verification record does not only contain the attributes, but also some metadata such as the digital signature of the issuer of the credentials, revocation details, verification policies etc. which then get validated against their sources. The image below describes this trust-triangle between the issuer, holder and verifier.
+Whilst in Damien's blog post he showed how a verifiable credential can be issued to a so called credential holder, this blog post will be about how we can verify such credentials as part of a business workflow. After an issuer has issued credentials to the holder and they have stored these into their wallet, a verifier can now ask a holder to verify them self with a certain credential. A verifier can add policies to check for certain attributes but also add restrictions like a specific issuer DID. With this in place a verifier can create a verification request which will be sent to the credential holder. This step is very important because it is where a cryptographic challenge is generated that the holder must respond to. This guarantees that the holder is responding to exactly this specific verification request. After the verification request gets returned to the verifier, it needs to be verified against the ledger to make sure it is valid. The verification record does not only contain the attributes, but also some metadata such as the digital signature of the issuer of the credentials, revocation details, verification policies etc. which then get validated against their sources. The image below describes this trust-triangle between the issuer, holder and verifier.
 
 <div class="text-center w-100">
     <img src="/posts/images/ssi-verification-workflow.png" alt="ssi verification workflow" width="550" />
 </div>
 
-### Connectionless Verifications
-
-In this blog post / demo we used _Connectionsless Verifications_. These have the ability to create a verification request without having to create a enduring relationship with the credential holder.
-
 ## Trinsic Setup
 
-Inside of the Trinsic studio you should now create a second organization. This can be on the same account as you have created the first organization as an issuer but also on a different account. After you have created the organization you need to acquire the API-Key that is required to call the Trinsic API from the verifier application. For this example we did no create a template for the verification request. So there is nothing more to do in the Trinsic Studio.
+Inside of the Trinsic studio you can now create a new organization. This can be on the same account as you have created the issuer organization but also on a different account works fine. After you have created the organization you need to acquire the API-Key that is required to call the Trinsic API from the verifier application. For this example we did no create a template for the verification request. So there is nothing more to do in the Trinsic Studio.
+
+### Connectionless Verifications
+
+For this scenario we used _Connectionsless Verifications_. These have the ability to create a verification request without having to create a enduring relationship with the credential holder. You can read more about this [here](https://docs.trinsic.id/docs/verifications-1#connectionless-verifications).
 
 ## Implementing the ASP.NET Core Verifier
 
