@@ -98,7 +98,7 @@ public async Task<(string verificationId, string verificationUrl)> CreateVerific
 }
 ```
 
-In our sample application if a customer wants to sign up for a new insurance we ask them to verify their car license. During this step we call the Trinsic API to create a verification request. From the API call we get a url that can be embedded inside a QR Code. This QR code can then be scanned by the credential holder inside of their wallet application and they can approve the request with their credential obtained by the issuer. Upon successful verification the form gets submitted to the backend for further processing.
+In our sample application if a customer wants to sign up for a new insurance we ask them to verify their driver license. During this step we call the Trinsic API to create a verification request. From the API call we get a url that can be embedded inside a QR Code. This QR code can then be scanned by the credential holder inside of their wallet application and they can approve the request with their credential obtained by the issuer. Upon successful verification the form gets submitted to the backend for further processing.
 
 <div class="text-center w-100">
     <img src="/posts/images/ssi-verify-form.png" alt="ssi verification form" width="550" />
