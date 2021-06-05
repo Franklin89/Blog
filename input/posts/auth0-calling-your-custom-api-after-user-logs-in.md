@@ -81,7 +81,7 @@ exports.onExecutePostLogin = async (event, api) => {
   });
 
   // 3. Update the access_token and id_token for the user that is currently logging in
-  if(organizations_response.data.modules){
+  if(organizations_response.data){
     api.accessToken.setCustomClaim("http://test.org/extra_info", users_response.data);
     api.idToken.setCustomClaim("http://test.org/extra_info", users_response.data);
   }
