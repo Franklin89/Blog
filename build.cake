@@ -1,5 +1,5 @@
 #tool "nuget:https://api.nuget.org/v3/index.json?package=Wyam&version=2.2.9"
-#addin "nuget:https://api.nuget.org/v3/index.json?package=Cake.Wyam&version=2.2.9"
+#addin "nuget:https://api.nuget.org/v3/index.json?package=Cake.Wyam&version=2.2.12"
 #addin "nuget:https://api.nuget.org/v3/index.json?package=NetlifySharp&version=1.1.0"
 
 
